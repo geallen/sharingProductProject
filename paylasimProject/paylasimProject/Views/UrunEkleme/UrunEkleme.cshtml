@@ -1,0 +1,83 @@
+﻿@model paylasimProject.Models.UrunEklemeEkrani
+@{
+    ViewBag.Title = "UrunEkleme";
+    if (null != TempData["mesaj4"])
+    {
+        <script type="text/javascript">
+       alert('@TempData["mesaj4"]');
+        </script>
+    }
+}
+
+<h2>UrunEkleme</h2>
+<h4>@ViewBag.sonuc</h4>
+<h3>@ViewBag.resimAdi</h3>
+<h3>@ViewBag.uzantisizResimAdi</h3>
+<h3>@ViewBag.yol</h3>
+@*<div class="row">
+    <div class="col-md-8">
+        <section id="urunEkleForm">*@
+            @*@using (Html.BeginForm("UrunEkleme", "UrunEkleme", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))*@
+                @using (Html.BeginForm("UrunEkleme", "UrunEkleme", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+
+                {
+                @Html.AntiForgeryToken()
+                <h4>Urun Ekleyiniz</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UrunAdi, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.UrunAdi, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.UrunAdi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UrunResmi, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @*@Html.ValidationMessageFor(m => m.UrunResmi, "", new { @class = "text-danger" })*@
+                        <input type="file" id="UrunResmi" name="UrunResmi" /> <br /><br />
+                        @*@Html.TextBoxFor(m => m.UrunResmi, new { @class = "form-control" })*@
+                        @Html.ValidationMessageFor(m => m.UrunResmi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UrunDurumu, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.UrunDurumu, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.UrunDurumu, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UrunBilgisi, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.UrunBilgisi, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.UrunBilgisi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+               
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Giris Yap" class="btn btn-default" />
+                    </div>
+                </div>
+
+
+            }
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+        @*</section>
+    </div>
+
+</div>*@

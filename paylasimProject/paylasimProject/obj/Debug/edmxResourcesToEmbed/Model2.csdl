@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="projectPaylasimModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="rezerv">
+    <Key>
+      <PropertyRef Name="rezervId" />
+    </Key>
+    <Property Name="rezervId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="urunId" Type="Int32" Nullable="false" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="urun" Relationship="Self.FK_rezerv_urun" FromRole="rezerv" ToRole="urun" />
+    <NavigationProperty Name="user" Relationship="Self.FK_rezerv_user" FromRole="rezerv" ToRole="user" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="urun">
+    <Key>
+      <PropertyRef Name="urunId" />
+    </Key>
+    <Property Name="urunId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="urunAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="urunResmi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="urunDurumu" Type="Int32" Nullable="false" />
+    <Property Name="urunBilgisi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="rezerv" Relationship="Self.FK_rezerv_urun" FromRole="urun" ToRole="rezerv" />
+    <NavigationProperty Name="yorum" Relationship="Self.FK_yorum_urun" FromRole="urun" ToRole="yorum" />
+    <Property Name="urunPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="userSoyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="userAdres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="userTel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="userMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="userKullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="userSifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="userTipi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="rezerv" Relationship="Self.FK_rezerv_user" FromRole="user" ToRole="rezerv" />
+    <NavigationProperty Name="yorum" Relationship="Self.FK_yorum_user" FromRole="user" ToRole="yorum" />
+  </EntityType>
+  <EntityType Name="yorum">
+    <Key>
+      <PropertyRef Name="yorumId" />
+    </Key>
+    <Property Name="yorumId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="yorumTarihi" Type="DateTime" Precision="0" />
+    <Property Name="yorumIcerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="urunId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="urun" Relationship="Self.FK_yorum_urun" FromRole="yorum" ToRole="urun" />
+    <NavigationProperty Name="user" Relationship="Self.FK_yorum_user" FromRole="yorum" ToRole="user" />
+  </EntityType>
+  <Association Name="FK_rezerv_urun">
+    <End Role="urun" Type="Self.urun" Multiplicity="1" />
+    <End Role="rezerv" Type="Self.rezerv" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="urun">
+        <PropertyRef Name="urunId" />
+      </Principal>
+      <Dependent Role="rezerv">
+        <PropertyRef Name="urunId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_rezerv_user">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="rezerv" Type="Self.rezerv" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="rezerv">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_yorum_urun">
+    <End Role="urun" Type="Self.urun" Multiplicity="1" />
+    <End Role="yorum" Type="Self.yorum" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="urun">
+        <PropertyRef Name="urunId" />
+      </Principal>
+      <Dependent Role="yorum">
+        <PropertyRef Name="urunId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_yorum_user">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="yorum" Type="Self.yorum" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="yorum">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="projectPaylasimEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="rezerv" EntityType="Self.rezerv" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="urun" EntityType="Self.urun" />
+    <EntitySet Name="user" EntityType="Self.user" />
+    <EntitySet Name="yorum" EntityType="Self.yorum" />
+    <AssociationSet Name="FK_rezerv_urun" Association="Self.FK_rezerv_urun">
+      <End Role="urun" EntitySet="urun" />
+      <End Role="rezerv" EntitySet="rezerv" />
+    </AssociationSet>
+    <AssociationSet Name="FK_rezerv_user" Association="Self.FK_rezerv_user">
+      <End Role="user" EntitySet="user" />
+      <End Role="rezerv" EntitySet="rezerv" />
+    </AssociationSet>
+    <AssociationSet Name="FK_yorum_urun" Association="Self.FK_yorum_urun">
+      <End Role="urun" EntitySet="urun" />
+      <End Role="yorum" EntitySet="yorum" />
+    </AssociationSet>
+    <AssociationSet Name="FK_yorum_user" Association="Self.FK_yorum_user">
+      <End Role="user" EntitySet="user" />
+      <End Role="yorum" EntitySet="yorum" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

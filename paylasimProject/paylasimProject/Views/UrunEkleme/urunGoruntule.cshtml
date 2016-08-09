@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "Urun Goruntule";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>urun Goruntule</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog" style="left:-15px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                   <center> <h4 class="modal-title" id="urunADI">URUN DETAYLARI</h4></center>
+                </div>
+                <div class="modal-body">
+                    @*<p id="urunADI">Some text in the modal.</p>*@
+
+                    <center><img src="sss" id="xcvb" width="50%" height="auto" max-width="120px" max-height="400px"></center>
+
+                    <center><p id="xyz"></p></center>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2>URUNLERI GORUNTULE</h2>
+    <table class="table">
+        <tr>
+            <th>URUN ADI</th>
+            <th>URUN DETAY</th>
+            <th>URUN DURUMU</th>
+            <th>URUN ID</th>
+            <th>URUN RESMI</th>
+
+        </tr>
+        @foreach (urun u in ViewBag.urunListesi)
+        {
+            <tr>
+                @{ yorum yorumm = u.yorum.FirstOrDefault();
+                string yorum = "Yorum Yok";
+                if (yorumm != null)
+                {
+                    yorum = yorumm.yorumIcerik;
+                }
+                }
+
+                <td>@u.urunAdi</td>
+                <td>@u.urunBilgisi</td>
+                <td>@u.urunDurumu</td>
+                <td>@u.urunId</td>
+                @{string urunYolu = u.urunPath;}
+                @*<td><a id="urunresim" href="~/images/@urunYolu">Resmi Gor</a></td>
+
+                    <td>@yorum</td>*@
+
+                <td>
+
+                    @*<div class="container">*@
+                    <button type="button" class="btn btn-info btn-default" data-img="/images/@urunYolu" data-urunAdi="@u.urunAdi" data-comment="@yorum" data-toggle="modal">Resmi Gor</button>
+                    @*</div>*@
+
+                </td>
+                <p></p>
+            </tr>
+                    }
+    </table>
+
+    <script>
+        $(document).ready(function () {
+            $(".btn").click(function () {
+                $("#xcvb").attr("src", $(this).attr("data-img"));
+                $("#xyz").html($(this).attr("data-comment"));
+                $("#urunADI").html($(this).attr("data-urunAdi"));
+                $("#myModal").modal("toggle");
+            });
+            /*
+            $('tr').click(function () {
+                 var b = $(this).find("td:nth-child(5)").find("a").attr("href");
+                $("#xcvb").attr("src", b);
+                var c = $(this).find("td:nth-child(2)").text();
+                $("#xyz").text(c);
+
+            });*/
+        });
+
+
+    </script>
+</body>
+</html>

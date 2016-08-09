@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="projectPaylasimModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="urun">
+    <Key>
+      <PropertyRef Name="urunId" />
+    </Key>
+    <Property Name="urunId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="urunAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="urunResmi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="urunDurumu" Type="Int32" Nullable="false" />
+    <Property Name="urunBilgisi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="projectPaylasimEntities3" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="urun" EntityType="Self.urun" />
+  </EntityContainer>
+</Schema>

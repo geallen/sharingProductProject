@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="projectPaylasimModel1StoreContainer" CdmEntityContainer="projectPaylasimEntities3">
+    <EntitySetMapping Name="urun">
+      <EntityTypeMapping TypeName="projectPaylasimModel1.urun">
+        <MappingFragment StoreEntitySet="urun">
+          <ScalarProperty Name="urunId" ColumnName="urunId" />
+          <ScalarProperty Name="urunAdi" ColumnName="urunAdi" />
+          <ScalarProperty Name="urunResmi" ColumnName="urunResmi" />
+          <ScalarProperty Name="urunDurumu" ColumnName="urunDurumu" />
+          <ScalarProperty Name="urunBilgisi" ColumnName="urunBilgisi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="projectPaylasimModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="urun">
+    <Key>
+      <PropertyRef Name="urunId" />
+    </Key>
+    <Property Name="urunId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="urunAdi" Type="nvarchar" MaxLength="50" />
+    <Property Name="urunResmi" Type="nvarchar" MaxLength="50" />
+    <Property Name="urunDurumu" Type="int" Nullable="false" />
+    <Property Name="urunBilgisi" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityContainer Name="projectPaylasimModel1StoreContainer">
+    <EntitySet Name="urun" EntityType="Self.urun" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

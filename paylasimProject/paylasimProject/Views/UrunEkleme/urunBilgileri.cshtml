@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>urunBilgileri</title>
+    <style>
+    #header {width: 100%; height: 100px; background-color: red;}
+    #col-1 {width: 50%; float: left; height: 1000px; background-color: green;}
+    #col-2 {width: 50%; float: right; height: 1000px; background-color: blue;}
+    /* Height can be changed but width cannot */
+    </style>
+</head>
+<body>
+  
+    <div id="header"><h1>This is a header</h1></div>
+    <div id="col-1"><h1>This is half of a page</h1>
+        <center><img src="~/images/palto.jpg" width="50%" height="auto" max-width="120px" max-height="400px"></center></div>
+    <div id="col-2"><h1>This is another half of a page</h1>
+    @*<table class="table">
+    <tr>
+        <th>URUN ADI</th>
+        <th>URUN BILGISI</th>
+
+        <th>URUN DURUMU</th>
+        <th>URUN ID</th>
+        <th>URUN RESMI</th>
+        <th>URUN RESMII</th>
+    </tr>
+
+    @foreach (urun u in ViewBag.urunListesi)
+    {
+        <tr>
+            @{var yorum = u.yorum.FirstOrDefault();}
+
+            <td>@u.urunAdi</td>
+            <td>@u.urunBilgisi</td>
+            <td>@u.urunDurumu</td>
+            <td>@u.urunId</td>
+            @{string urunYolu = u.urunPath;}
+            <td><a href="~/images/@urunYolu">Resmi Gor</a></td>
+            <td>@yorum.yorumIcerik</td>
+          
+            <td><a href="urunBilgileri.cshtml">Resmi Gor</a></td>
+
+            <p></p>
+        </tr>
+                }
+</table>*@
+    <table>
+        @foreach (urun u in ViewBag.urunListesi)
+        {
+            if (u.yorum.FirstOrDefault().urunId == 18)
+            {
+            <tr>
+                @{var yorum = u.yorum.FirstOrDefault();}
+                <td>Hello</td>
+             @*  if(@yorum.urunId==18){*@
+                    <td>@yorum.yorumIcerik</td>
+               @* }*@
+                </tr>
+                    }
+                    else
+                    { <p></p>
+                        }
+                    }
+        </table>
+</div>
+
+</body>
+</html>
