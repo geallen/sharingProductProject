@@ -10,7 +10,6 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>urun Goruntule</title>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -19,22 +18,73 @@
 </head>
 
 <body>
+    @{ var icerik = ViewBag.yorumIcerikkk;
+        var yardimAlanAdi = ViewBag.userAdi;
+        var gonulluAdi = ViewBag.userAdi1;
+        var kId = 0;
+        projectPaylasimEntities4 db = new projectPaylasimEntities4();
+        foreach (user user in ViewBag.kullaniciListesi)
+        {
+            if (yardimAlanAdi == user.userKullaniciAdi || gonulluAdi == user.userKullaniciAdi)
+            {
+                kId = user.userId;
+            }
+        }
+    }
+  @*  <h2>@ViewBag.yardimAdi</h2>
+    <h2>@ViewBag.gonulluAdi</h2>
+    <h3>@ViewBag.gonulluID</h3>
+    <h3>@ViewBag.yardimAlanID</h3>*@
+    @*@{ int gonullu_ID;
+            int yardimAlan_ID;
+
+            if (ViewBag.yardimAdi != null) {
+                yardimAlan_ID = ViewBag.yardimAlanID;
+            }
+            else if(ViewBag.gonulluAdi != null)
+            {
+                gonullu_ID = ViewBag.gonulluID;
+            }
+        }*@
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog" style="left:-15px;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                   <center> <h4 class="modal-title" id="urunADI">URUN DETAYLARI</h4></center>
+                    <center> <h4 class="modal-title" id="urunADI">URUN DETAYLARI</h4></center>
                 </div>
                 <div class="modal-body">
-                    @*<p id="urunADI">Some text in the modal.</p>*@
-
                     <center><img src="sss" id="xcvb" width="50%" height="auto" max-width="120px" max-height="400px"></center>
+                    <br />
+                    <table class="table" border="1">
+                        <tr>
+                            <th>YORUMLAR</th>
+                            <th>YORUM TARIHI</th>
+                            <th>YORUM SAHIBI</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="xyz"></div>
+                            </td>
+                            <td>
+                                <p id="yorumYapilmaTarihi"></p>
+                            </td>
+                            <td>
+                                <p id="yorumYapanKisiAdi"></p>
+                            </td>
 
-                    <center><p id="xyz"></p></center>
+                        </tr>
+
+                        <tr hidden>
+                            <td><p id="urunIdd" hidden></p></td>
+                            <td><p id="kidd" hidden>@kId</p></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="text" id="yorumIcerik" name="yorumIcerigi" placeholder="yorum icerigi" />
+                    <button type="button" class="btn btn-default" onclick="yorumuEkle()">Yorum Ekle</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
                 </div>
             </div>
         </div>
@@ -47,46 +97,108 @@
             <th>URUN DURUMU</th>
             <th>URUN ID</th>
             <th>URUN RESMI</th>
+            <th>MESAJLASMA</th>
+            <th>Sessionli userid</th>
+            <th>URUN SAHIBI</th>
 
         </tr>
         @foreach (urun u in ViewBag.urunListesi)
         {
             <tr>
-                @{ yorum yorumm = u.yorum.FirstOrDefault();
-                string yorum = "Yorum Yok";
-                if (yorumm != null)
-                {
-                    yorum = yorumm.yorumIcerik;
-                }
+                @{
+                    var yorumm = u.yorum.ToList();
+                    string yorumicerik = "Yorum Yok";
+                    string yorumSahibi = "isimsiz";
+                    int yorumYapan = 0;
+                    DateTime yorum_tarihi = DateTime.Now;
+                    string tarih = yorum_tarihi.ToLongDateString();
+
+                    int gonullu_ID = 0;
+                    int yardimAlan_ID = 0;
+
+                    if (ViewBag.yardimAdi != null)
+                    {
+                        yardimAlan_ID = ViewBag.yardimAlanID;
+                    }
+                    else if (ViewBag.gonulluAdi != null)
+                    {
+                        gonullu_ID = ViewBag.gonulluID;
+                    }
+
+                    //if (yorumm != null)
+                    //{
+                    //    yorumicerik = yorumm.yorumIcerik;
+                    //    yorumYapan = yorumm.userId;
+                    //    yorumSahibi = yorumm.user.userAdi;
+                    //    tarih = yorumm.yorumTarihi.ToString();
+
+                    //}
+                    //burasi eklendi.
+                    // List<string> yorumlarListesi = new List<string>();
+                    string yorumlarListesi = string.Empty;
+                    string yorumTarihleriListesi = string.Empty;
+                    string yorumSahipleriListesi = string.Empty;
+                    foreach (yorum y in yorumm)
+                    {
+                        yorumicerik = y.yorumIcerik;
+                        yorumlarListesi += "<p>" + yorumicerik + "</p>";
+                        yorumYapan = y.userId;
+                        yorumSahibi = y.user.userAdi;
+                        yorumSahipleriListesi += "<p>" + yorumSahibi + "</p>";
+                        tarih = y.yorumTarihi.ToString();
+                        yorumTarihleriListesi += "<p>" + tarih + "</p>";
+
+                    }
                 }
 
                 <td>@u.urunAdi</td>
                 <td>@u.urunBilgisi</td>
                 <td>@u.urunDurumu</td>
                 <td>@u.urunId</td>
-                @{string urunYolu = u.urunPath;}
-                @*<td><a id="urunresim" href="~/images/@urunYolu">Resmi Gor</a></td>
-
-                    <td>@yorum</td>*@
+                @{string urunYolu = u.urunPath;
+                    //var ekleyenUser = u.ekleyenUserId;
+                }
 
                 <td>
-
-                    @*<div class="container">*@
-                    <button type="button" class="btn btn-info btn-default" data-img="/images/@urunYolu" data-urunAdi="@u.urunAdi" data-comment="@yorum" data-toggle="modal">Resmi Gor</button>
-                    @*</div>*@
-
+                    <button type="button" class="btn btn-info btn-default" data-urunId="@u.urunId" data-img="/images/@urunYolu" data-urunAdi="@u.urunAdi" data-yorumTarihi="@yorumTarihleriListesi" data-userID="@yorumYapan" data-userADI="@yorumSahipleriListesi" data-comment="@yorumlarListesi" data-toggle="modal">Resmi Gor</button>
                 </td>
-                <p></p>
+                <td>@Html.ActionLink("Mesaj At", "Mesajlasma", "Home", new { urunSahibiId = @u.ekleyenUserId}, null)</td>
+                
+                @if (ViewBag.yardimAdi != null)
+                {
+                    <td>@yardimAlan_ID</td>
+                }
+                else if (ViewBag.gonulluAdi != null)
+                {
+                    <td>@gonullu_ID</td>
+                }
+                <td>@u.ekleyenUserId</td>
+
             </tr>
                     }
     </table>
 
     <script>
+        function yorumEkleme() {
+            alert("merhaba bu deneme butonu");
+        }
+        function yorumuEkle() {
+            var yorumIcerik = $("#yorumIcerik").val();
+            var urunid = $("#urunIdd").text();
+            var kullaniciID = $("#kidd").text();
+            $.post("../UrunEkleme/urunYorumEkle1", { yorumm: yorumIcerik, kid: kullaniciID, id: urunid }, function (data) {
+                alert(data);
+            });
+        }
         $(document).ready(function () {
             $(".btn").click(function () {
+                //xcvb id li olana data-img verilir
                 $("#xcvb").attr("src", $(this).attr("data-img"));
                 $("#xyz").html($(this).attr("data-comment"));
                 $("#urunADI").html($(this).attr("data-urunAdi"));
+                $("#yorumYapilmaTarihi").html($(this).attr("data-yorumTarihi"));
+                $("#urunIdd").html($(this).attr("data-urunId"));
+                $("#yorumYapanKisiAdi").html($(this).attr("data-userADI"));
                 $("#myModal").modal("toggle");
             });
             /*

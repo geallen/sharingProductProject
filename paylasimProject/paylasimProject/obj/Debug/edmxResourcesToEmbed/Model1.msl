@@ -24,6 +24,7 @@
     <EntitySetMapping Name="urun">
       <EntityTypeMapping TypeName="projectPaylasimModel.urun">
         <MappingFragment StoreEntitySet="urun">
+          <ScalarProperty Name="ekleyenUserId" ColumnName="ekleyenUserId" />
           <ScalarProperty Name="urunId" ColumnName="urunId" />
           <ScalarProperty Name="urunAdi" ColumnName="urunAdi" />
           <ScalarProperty Name="urunResmi" ColumnName="urunResmi" />
@@ -56,6 +57,18 @@
           <ScalarProperty Name="yorumIcerik" ColumnName="yorumIcerik" />
           <ScalarProperty Name="userId" ColumnName="userId" />
           <ScalarProperty Name="urunId" ColumnName="urunId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="mesajlar">
+      <EntityTypeMapping TypeName="projectPaylasimModel.mesajlar">
+        <MappingFragment StoreEntitySet="mesajlar">
+          <ScalarProperty Name="gonderilmeTarihi" ColumnName="gonderilmeTarihi" />
+          <ScalarProperty Name="mesajKonusu" ColumnName="mesajKonusu" />
+          <ScalarProperty Name="mesajIcerik" ColumnName="mesajIcerik" />
+          <ScalarProperty Name="gonderilenId" ColumnName="gonderilenId" />
+          <ScalarProperty Name="gonderenId" ColumnName="gonderenId" />
+          <ScalarProperty Name="mesajId" ColumnName="mesajId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

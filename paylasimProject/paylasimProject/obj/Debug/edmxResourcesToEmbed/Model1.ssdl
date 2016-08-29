@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="projectPaylasimModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="mesajlar">
+    <Key>
+      <PropertyRef Name="mesajId" />
+    </Key>
+    <Property Name="mesajId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="gonderenId" Type="int" Nullable="false" />
+    <Property Name="gonderilenId" Type="int" Nullable="false" />
+    <Property Name="mesajIcerik" Type="nvarchar(max)" />
+    <Property Name="mesajKonusu" Type="nvarchar" MaxLength="50" />
+    <Property Name="gonderilmeTarihi" Type="date" />
+  </EntityType>
   <EntityType Name="rezerv">
     <Key>
       <PropertyRef Name="rezervId" />
@@ -28,6 +39,7 @@
     <Property Name="urunDurumu" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="urunBilgisi" Type="nvarchar(max)" />
     <Property Name="urunPath" Type="nvarchar(max)" />
+    <Property Name="ekleyenUserId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="user">
     <Key>
@@ -53,6 +65,30 @@
     <Property Name="userId" Type="int" Nullable="false" />
     <Property Name="urunId" Type="int" Nullable="false" />
   </EntityType>
+  <Association Name="FK_mesajlar_user">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="mesajlar" Type="Self.mesajlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="mesajlar">
+        <PropertyRef Name="gonderilenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_mesajlar_user1">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="mesajlar" Type="Self.mesajlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="mesajlar">
+        <PropertyRef Name="gonderilenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_rezerv_urun">
     <End Role="urun" Type="Self.urun" Multiplicity="1" />
     <End Role="rezerv" Type="Self.rezerv" Multiplicity="*" />
@@ -102,11 +138,20 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="projectPaylasimModelStoreContainer">
+    <EntitySet Name="mesajlar" EntityType="Self.mesajlar" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="rezerv" EntityType="Self.rezerv" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="urun" EntityType="Self.urun" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="yorum" EntityType="Self.yorum" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_mesajlar_user" Association="Self.FK_mesajlar_user">
+      <End Role="user" EntitySet="user" />
+      <End Role="mesajlar" EntitySet="mesajlar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_mesajlar_user1" Association="Self.FK_mesajlar_user1">
+      <End Role="user" EntitySet="user" />
+      <End Role="mesajlar" EntitySet="mesajlar" />
+    </AssociationSet>
     <AssociationSet Name="FK_rezerv_urun" Association="Self.FK_rezerv_urun">
       <End Role="urun" EntitySet="urun" />
       <End Role="rezerv" EntitySet="rezerv" />

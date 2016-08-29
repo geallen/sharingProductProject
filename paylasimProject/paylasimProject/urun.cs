@@ -27,6 +27,7 @@ namespace paylasimProject
         public string urunDurumu { get; set; }
         public string urunBilgisi { get; set; }
         public string urunPath { get; set; }
+        public int ekleyenUserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rezerv> rezerv { get; set; }

@@ -31,8 +31,12 @@ namespace paylasimProject.Models
         [Display(Name = "Urun Bilgisi")]
         public string UrunBilgisi { get; set; }
 
-       
-       
+        //[Required]
+        [DataType(DataType.Duration)]
+        [Display(Name = "User Id")]
+        public int UserId { get; set; }
+
+
 
 
     }

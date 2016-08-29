@@ -14,6 +14,9 @@
         <AssociationConnector Association="projectPaylasimModel.FK_rezerv_user" ManuallyRouted="false" />
         <AssociationConnector Association="projectPaylasimModel.FK_yorum_urun" ManuallyRouted="false" />
         <AssociationConnector Association="projectPaylasimModel.FK_yorum_user" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="projectPaylasimModel.mesajlar" Width="1.5" PointX="3" PointY="7" />
+        <AssociationConnector Association="projectPaylasimModel.FK_mesajlar_user" />
+        <AssociationConnector Association="projectPaylasimModel.FK_mesajlar_user1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

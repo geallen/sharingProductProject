@@ -32,6 +32,7 @@
     <Property Name="urunPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="rezerv" Relationship="Self.FK_rezerv_urun" FromRole="urun" ToRole="rezerv" />
     <NavigationProperty Name="yorum" Relationship="Self.FK_yorum_urun" FromRole="urun" ToRole="yorum" />
+    <Property Name="ekleyenUserId" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="user">
     <Key>
@@ -48,6 +49,8 @@
     <Property Name="userTipi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="rezerv" Relationship="Self.FK_rezerv_user" FromRole="user" ToRole="rezerv" />
     <NavigationProperty Name="yorum" Relationship="Self.FK_yorum_user" FromRole="user" ToRole="yorum" />
+    <NavigationProperty Name="mesajlar" Relationship="projectPaylasimModel.FK_mesajlar_user" FromRole="user" ToRole="mesajlar" />
+    <NavigationProperty Name="mesajlar1" Relationship="projectPaylasimModel.FK_mesajlar_user1" FromRole="user" ToRole="mesajlar" />
   </EntityType>
   <EntityType Name="yorum">
     <Key>
@@ -131,5 +134,51 @@
       <End Role="user" EntitySet="user" />
       <End Role="yorum" EntitySet="yorum" />
     </AssociationSet>
+    <EntitySet Name="mesajlar" EntityType="projectPaylasimModel.mesajlar" />
+    <AssociationSet Name="FK_mesajlar_user" Association="projectPaylasimModel.FK_mesajlar_user">
+      <End Role="user" EntitySet="user" />
+      <End Role="mesajlar" EntitySet="mesajlar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_mesajlar_user1" Association="projectPaylasimModel.FK_mesajlar_user1">
+      <End Role="user" EntitySet="user" />
+      <End Role="mesajlar" EntitySet="mesajlar" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="mesajlar">
+    <Key>
+      <PropertyRef Name="mesajId" />
+    </Key>
+    <Property Name="mesajId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="gonderenId" Type="Int32" Nullable="false" />
+    <Property Name="gonderilenId" Type="Int32" Nullable="false" />
+    <Property Name="mesajIcerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="mesajKonusu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="gonderilmeTarihi" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="user" Relationship="projectPaylasimModel.FK_mesajlar_user" FromRole="mesajlar" ToRole="user" />
+    <NavigationProperty Name="user1" Relationship="projectPaylasimModel.FK_mesajlar_user1" FromRole="mesajlar" ToRole="user" />
+  </EntityType>
+  <Association Name="FK_mesajlar_user">
+    <End Type="projectPaylasimModel.user" Role="user" Multiplicity="1" />
+    <End Type="projectPaylasimModel.mesajlar" Role="mesajlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="mesajlar">
+        <PropertyRef Name="gonderilenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_mesajlar_user1">
+    <End Type="projectPaylasimModel.user" Role="user" Multiplicity="1" />
+    <End Type="projectPaylasimModel.mesajlar" Role="mesajlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="mesajlar">
+        <PropertyRef Name="gonderilenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

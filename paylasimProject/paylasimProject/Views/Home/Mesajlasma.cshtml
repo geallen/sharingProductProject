@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "Mesajlasma";
+}
+
+<h2>@ViewBag.yardimAdi</h2>
+    <h2>@ViewBag.gonulluAdi</h2>
+    <h3>@ViewBag.gonulluID</h3>
+    <h3>@ViewBag.yardimAlanID</h3>
+<h4>@ViewBag.sonuc</h4>
+
+@{ //int gonullu_ID = 0;
+   //int yardimAlan_ID = 0;
+    int girisYapmisUserId = 0;
+
+    if (ViewBag.yardimAdi != null)
+    {
+        // yardimAlan_ID = ViewBag.yardimAlanID;
+        girisYapmisUserId = ViewBag.yardimAlanID;
+        // <p>@yardimAlan_ID</p>
+        <p>@girisYapmisUserId</p>
+    }
+    else
+    if (ViewBag.gonulluAdi != null)
+    {
+        //gonullu_ID = ViewBag.gonulluID;
+        girisYapmisUserId = ViewBag.gonulluID;
+        // <p>@gonullu_ID</p>
+         <p>@girisYapmisUserId</p>
+        }
+
+}
+
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="well well-sm">
+                <form class="form-horizontal" action="" method="post">
+                    <fieldset>
+                        <legend class="text-center">Mesaj Gonder</legend>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="sender">Kimden</label>
+                            <div class="col-md-9">
+                                <input id="sender" name="sender" type="text" value="@girisYapmisUserId" disabled class="form-control">
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="receiver">Kime</label>
+                            <div class="col-md-9">
+                                <input id="receiver" name="receiver" type="text" value="@Request["urunSahibiId"]" disabled class="form-control">
+                            </div>
+                            <input type="hidden" name="urunSahibiId" value='@Request["urunSahibiId"]' />
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="subject">Konu</label>
+                            <div class="col-md-9">
+                                <input id="konu" name="konu" type="text" placeholder="Konu" class="form-control">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="message">Onceki Mesajlar</label>
+                            <div class="col-md-9">
+                                <textarea class="form-control" id="oncekiler" name="oncekiler" rows="5"></textarea>    
+                            </div>    
+                        </div>
+
+
+                        <!-- Message body -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="message">Mesaj Icerigi</label>
+                            <div class="col-md-9">
+                                <textarea class="form-control" id="message" name="message" placeholder="Mesajinizi buraya giriniz..." rows="5"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Form actions -->
+                        <div class="form-group">
+                            <div class="col-md-12 text-right">
+                                <button type="submit" class="btn btn-primary btn-lg" onclick="mesajGonder()">Gonder</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function mesajGonder1() {
+      
+        var konu = $("#konu").val();
+        var icerik = $("#message").val();
+        alert(konu + " " + icerik);
+    }
+    function mesajGonder() {
+        var urunSahibiId = $("#receiver").val();
+
+        var sender = $("#sender").val();
+        var icerik = $("#message").val();
+        var konu = $("#konu").val();
+       // var gonderilmeTarihi = Date.now();
+        //alert(urunSahibiId+","+sender+","+icerik+","+konu+",");
+        //int siparis_id, int miktar, int alisFiyati, DateTime teslimTarihi, int iptaldurumu
+        //  alert("Hello" + "," + siparis_id + "," + miktar +","+ alisfiyati + ","+ teslimTarihi+","+iptalDurumu);
+        $.post("../Home/Mesajlasma", { gonderenId: sender, gonderilenId: urunSahibiId, mesaj: icerik, konu: konu }, function (data) {
+            alert("oldu");
+        });
+    }
+
+</script>

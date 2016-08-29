@@ -19,6 +19,8 @@ namespace paylasimProject
         {
             this.rezerv = new HashSet<rezerv>();
             this.yorum = new HashSet<yorum>();
+            this.mesajlar = new HashSet<mesajlar>();
+            this.mesajlar1 = new HashSet<mesajlar>();
         }
     
         public int userId { get; set; }
@@ -35,5 +37,9 @@ namespace paylasimProject
         public virtual ICollection<rezerv> rezerv { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<yorum> yorum { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<mesajlar> mesajlar { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<mesajlar> mesajlar1 { get; set; }
     }
 }

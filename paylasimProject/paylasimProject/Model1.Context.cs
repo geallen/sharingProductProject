@@ -30,5 +30,6 @@ namespace paylasimProject
         public virtual DbSet<urun> urun { get; set; }
         public virtual DbSet<user> user { get; set; }
         public virtual DbSet<yorum> yorum { get; set; }
+        public virtual DbSet<mesajlar> mesajlar { get; set; }
     }
 }

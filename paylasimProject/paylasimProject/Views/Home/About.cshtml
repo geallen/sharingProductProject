@@ -1,5 +1,12 @@
 ﻿@{
     ViewBag.Title = "About";
+    if (null != TempData["sonuc"])
+    {
+        <script type="text/javascript">
+            alert('@TempData["sonuc"]');
+        </script>
+
+    }
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>

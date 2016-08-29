@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "MesajlariGoruntule";
+}
+
+<h2>MesajlariGoruntule</h2>
+<h4>@ViewBag.userADI</h4>
+<h4>@ViewBag.userID</h4>
+
+<table class="table">
+    <tr>
+        <th>Gonderen Adi</th>
+    </tr>
+    @foreach (mesajlar mesaj in ViewBag.mesajListesi)
+    {
+        if (mesaj.gonderilenId == ViewBag.userID)
+        {
+            <tr>
+               
+                <td>@mesaj.gonderenId</td>
+                <td>@mesaj.mesajIcerik</td>
+        </tr>
+        }
+    }
+</table>

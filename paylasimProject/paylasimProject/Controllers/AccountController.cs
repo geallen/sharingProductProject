@@ -22,7 +22,7 @@ namespace paylasimProject.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +34,9 @@ namespace paylasimProject.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -88,17 +88,16 @@ namespace paylasimProject.Controllers
 
                         return RedirectToAction("Index", "Home");
                     }
-                    else if(model.KullaniciTipi == "Yardim Alan")
+                    else if (model.KullaniciTipi == "Yardim Alan")
                     {
                         TempData["mesaj"] = "Yardim Alan girisi basariliyla yapildi";
                         var kullaniciAdi = model.Kullanici_Adi;
                         ViewData.Add("fullname", kullaniciAdi);
                         Session["yardimalanAdi"] = kullaniciAdi;
-
                         return RedirectToAction("Index", "Home");
                     }
                 }
-                    
+
 
                 //if (gonullu.Count<user>() > 0 )
                 //{
@@ -119,7 +118,7 @@ namespace paylasimProject.Controllers
 
                 //    return RedirectToAction("Index", "Home");
                 //}
-            
+
                 else
                 {
                     ModelState.AddModelError("", "Kullanici Adi veya Sifre hatali!");
@@ -164,7 +163,7 @@ namespace paylasimProject.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -195,7 +194,7 @@ namespace paylasimProject.Controllers
         {
             string sonuc = kullaniciEkle(model.Ad, model.Soyad, model.Adres, model.Tel, model.Email, model.Kullanici_Tipi, model.Kullanici_Adi, model.Sifre);
             ViewBag.sonuc = sonuc;
-            if(sonuc == "Kullanici Ekleme Basarili")
+            if (sonuc == "Kullanici Ekleme Basarili")
             {
                 TempData["mesaj1"] = "Kullanici Ekleme Basarili";
             }
@@ -486,23 +485,25 @@ namespace paylasimProject.Controllers
 
         public string kullaniciEkle(string ad, string soyad, string adres, string tel, string mail, string kullaniciTuru, string kullaniciAdi, string sifre)
         {
-            try { 
-            projectPaylasimEntities4 db = new projectPaylasimEntities4();
-            user kullanici = new user();
-            kullanici.userAdi = ad;
-            kullanici.userSoyadi = soyad;
-            kullanici.userAdres = adres;
-            kullanici.userTel = tel;
-            kullanici.userMail = mail;
-            kullanici.userTipi = kullaniciTuru;
-            kullanici.userKullaniciAdi = kullaniciAdi;
-            kullanici.userSifre = sifre;
+            try
+            {
+                projectPaylasimEntities4 db = new projectPaylasimEntities4();
+                user kullanici = new user();
+                kullanici.userAdi = ad;
+                kullanici.userSoyadi = soyad;
+                kullanici.userAdres = adres;
+                kullanici.userTel = tel;
+                kullanici.userMail = mail;
+                kullanici.userTipi = kullaniciTuru;
+                kullanici.userKullaniciAdi = kullaniciAdi;
+                kullanici.userSifre = sifre;
                 db.user.Add(kullanici);
                 db.SaveChanges();
 
 
                 return "Kullanici Ekleme Basarili";
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return "Hata : " + ex;
             }
