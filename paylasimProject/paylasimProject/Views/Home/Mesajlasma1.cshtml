@@ -1,35 +1,33 @@
 ﻿
 @{
-    ViewBag.Title = "Mesajlasma";
+    ViewBag.Title = "Mesajlasma1";
 }
-<h2>@ViewBag.gonderenId</h2>
-<h3>@ViewBag.urunSahibiID</h3>
-<h2>@ViewBag.yardimAdi</h2>
+
+<h2>@ViewBag.Message</h2>
+
+<h4>@ViewBag.sonucc</h4>
+<h4>@ViewBag.deneme</h4>
+@*<h2 hidden>@ViewBag.gonderenID</h2>
+    <h2>@ViewBag.yardimAdi</h2>
     <h2>@ViewBag.gonulluAdi</h2>
     <h3>@ViewBag.gonulluID</h3>
-    <h3>@ViewBag.yardimAlanID</h3>
+    <h3>@ViewBag.yardimAlanID</h3>*@
 <h4>@ViewBag.sonuc</h4>
 
-@{ //int gonullu_ID = 0;
-   //int yardimAlan_ID = 0;
-
+@{ var gonderen = @Request["gonderenID"];
     int girisYapmisUserId = 0;
-
+    <p>@gonderen</p>
     if (ViewBag.yardimAdi != null)
     {
-        // yardimAlan_ID = ViewBag.yardimAlanID;
         girisYapmisUserId = ViewBag.yardimAlanID;
-        // <p>@yardimAlan_ID</p>
         <p>@girisYapmisUserId</p>
     }
     else
     if (ViewBag.gonulluAdi != null)
     {
-        //gonullu_ID = ViewBag.gonulluID;
         girisYapmisUserId = ViewBag.gonulluID;
-        // <p>@gonullu_ID</p>
-         <p>@girisYapmisUserId</p>
-        }
+        <p>@girisYapmisUserId</p>
+    }
 
 }
 
@@ -38,26 +36,31 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="well well-sm">
-                <form class="form-horizontal" action="../Home/Mesajlasma" method="post">
+                <form class="form-horizontal" method="post" action="../Home/Mesajlasma1">
                     <fieldset>
                         <legend class="text-center">Mesaj Gonder</legend>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="sender">Kimden</label>
                             <div class="col-md-9">
-                                <input id="sender" name="sender" type="text" value="@girisYapmisUserId" class="form-control">
+                                <input id="sender" name="gonderenId" type="text" value="@ViewBag.girisYapmisUserId" class="form-control">
                             </div>
                         </div>
-                        
-                        
+
+
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="receiver">Kime</label>
                             <div class="col-md-9">
-                                <input id="receiver" name="receiver" type="text" value="@Request["urunSahibiId"]" class="form-control">
+                                <input id="receiver" name="gonderilenId" type="text" value="@gonderen" class="form-control">
                             </div>
-                            @*<input type="hidden" name="urunSahibiId" value='@Request["urunSahibiId"]' />*@
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="message">Onceki Mesajlar</label>
+                            <div class="col-md-9">
+                                <textarea class="form-control" id="oncekiler" name="oncekiler" placeholder="@ViewBag.mesajListesi" rows="5"></textarea>
+                            </div>
+                        </div>
 
 
                         <div class="form-group">
@@ -66,14 +69,6 @@
                                 <input id="konu" name="konu" type="text" placeholder="Konu" class="form-control">
                             </div>
                         </div>
-
-
-                        @*<div class="form-group">
-                            <label class="col-md-3 control-label" for="message">Onceki Mesajlar</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" id="oncekiler" name="oncekiler" rows="5"></textarea>    
-                            </div>    
-                        </div>*@
 
 
                         <!-- Message body -->
@@ -97,27 +92,26 @@
     </div>
 </div>
 <script>
-    function mesajGonder1() {
-      
-        var konu = $("#konu").val();
-        var icerik = $("#message").val();
-        alert(konu + " " + icerik);
-    }
     function mesajGonder() {
-        var urunSahibiId = $("#receiver").val();
-       // var urunSahibi = $("#urunSahibiId").text();
-        var sender = $("#sender").val();
-        var icerik = $("#message").val();
-        var konu = $("#konu").val();
-       // var gonderilmeTarihi = Date.now();
-        //alert(urunSahibiId+","+sender+","+icerik+","+konu+",");
-        //int siparis_id, int miktar, int alisFiyati, DateTime teslimTarihi, int iptaldurumu
-        //  alert("Hello" + "," + siparis_id + "," + miktar +","+ alisfiyati + ","+ teslimTarihi+","+iptalDurumu);
-     //   $.post("../Home/Mesajlasma", { gonderenId: sender, gonderilenId: urunSahibiId, mesaj: icerik, konu: konu }, function (data) {
-       //     alert("oldu");
-        //});
+        var _gonderilenId = $("#receiver").val();
 
-        $.post("../Home/Mesajlasma", { gonderenId: sender, gonderilenId: urunSahibiId, mesaj: icerik, konu: konu });
+        // int formID = int.Parse(gonderilenId.First());
+        var a = parseInt(_gonderilenId);
+
+        var _gonderenId = $("#sender").val();
+        var b = parseInt(_gonderenId);
+        alert(a + "," + b);
+        var c = a + b;
+        alert(typeof b);
+        alert(typeof a);
+        //var d = gonderenId + gonderilenId;
+        var mesaj = $("#message").val();
+        var konu = $("#konu").val();
+        $.post("../Home/Mesajlasma1", { gonderenId: b, gonderilenId: a, mesaj: mesaj, konu: konu }, function (data) {
+
+        });
+        //  alert(gonderenId + gonderilenId);
+
     }
 
 </script>

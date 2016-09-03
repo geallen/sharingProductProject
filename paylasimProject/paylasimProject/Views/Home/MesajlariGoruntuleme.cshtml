@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "MesajlariGoruntuleme";
+}
+
+<h2>MesajlariGoruntuleme</h2>
+<table class="table">
+    <tr>
+        <th>Gonderen</th>
+        <th>Gonderilme Tarihi</th>
+    </tr>
+
+    @{ projectPaylasimEntities4 db = new projectPaylasimEntities4();
+        foreach (mesajlar mesaj in db.mesajlar)
+        {
+            if (mesaj.gonderilenId == ViewBag.girisYapmisUserId)
+            {
+                <tr>
+                    @foreach (user user in db.user)
+                    {
+                        if (user.userId == mesaj.gonderenId)
+                        {
+                            <td>@user.userAdi</td>
+                        }
+                    }
+                    <td>@mesaj.gonderilmeTarihi</td>
+                    <td>@mesaj.mesajIcerik</td>
+                    <td>@Html.ActionLink("Mesaji Gor","Mesajlasma1","Home", new { gonderenID = @mesaj.gonderenId }, null)</td>
+                </tr>
+            }
+        }
+    }
+
+
+</table>

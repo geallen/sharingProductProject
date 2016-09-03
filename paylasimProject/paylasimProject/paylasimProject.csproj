@@ -327,6 +327,8 @@
     <Content Include="Views\UrunEkleme\urunBilgileri.cshtml" />
     <Content Include="Views\Home\Mesajlasma.cshtml" />
     <Content Include="Views\Home\MesajlariGoruntule.cshtml" />
+    <Content Include="Views\Home\Mesajlasma1.cshtml" />
+    <Content Include="Views\Home\MesajlariGoruntuleme.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -153,7 +153,7 @@
     <Property Name="gonderilenId" Type="Int32" Nullable="false" />
     <Property Name="mesajIcerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="mesajKonusu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="gonderilmeTarihi" Type="DateTime" Precision="0" />
+    <Property Name="gonderilmeTarihi" Type="DateTime" Precision="0" Nullable="false" />
     <NavigationProperty Name="user" Relationship="projectPaylasimModel.FK_mesajlar_user" FromRole="mesajlar" ToRole="user" />
     <NavigationProperty Name="user1" Relationship="projectPaylasimModel.FK_mesajlar_user1" FromRole="mesajlar" ToRole="user" />
   </EntityType>

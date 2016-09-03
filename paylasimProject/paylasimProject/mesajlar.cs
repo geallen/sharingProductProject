@@ -19,7 +19,7 @@ namespace paylasimProject
         public int gonderilenId { get; set; }
         public string mesajIcerik { get; set; }
         public string mesajKonusu { get; set; }
-        public Nullable<System.DateTime> gonderilmeTarihi { get; set; }
+        public System.DateTime gonderilmeTarihi { get; set; }
     
         public virtual user user { get; set; }
         public virtual user user1 { get; set; }

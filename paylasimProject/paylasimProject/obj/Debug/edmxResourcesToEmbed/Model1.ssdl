@@ -9,7 +9,7 @@
     <Property Name="gonderilenId" Type="int" Nullable="false" />
     <Property Name="mesajIcerik" Type="nvarchar(max)" />
     <Property Name="mesajKonusu" Type="nvarchar" MaxLength="50" />
-    <Property Name="gonderilmeTarihi" Type="date" />
+    <Property Name="gonderilmeTarihi" Type="date" Nullable="false" />
   </EntityType>
   <EntityType Name="rezerv">
     <Key>

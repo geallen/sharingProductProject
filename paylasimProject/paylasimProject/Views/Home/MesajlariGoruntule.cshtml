@@ -1,11 +1,19 @@
 ﻿
 @{
     ViewBag.Title = "MesajlariGoruntule";
+
+    if (TempData["gonderilmeBilgisi"] != null)
+    {
+        <script type="text/javascript">
+            alert('@TempData["gonderilmeBilgisi"]');
+        </script>
+    }
 }
 
 <h2>MesajlariGoruntule</h2>
-<h4>@ViewBag.userADI</h4>
-<h4>@ViewBag.userID</h4>
+@*<h4>@ViewBag.userADI</h4>
+<h4>@ViewBag.userID</h4>*@
+
 
 <table class="table">
     <tr>
@@ -16,10 +24,11 @@
         if (mesaj.gonderilenId == ViewBag.userID)
         {
             <tr>
-               
+
                 <td>@mesaj.gonderenId</td>
                 <td>@mesaj.mesajIcerik</td>
-        </tr>
+                <td>@Html.ActionLink("Mesaji Gor", "Mesajlasma1", "Home", new { gonderenID = @mesaj.gonderenId }, null)</td>
+            </tr>
         }
     }
 </table>
