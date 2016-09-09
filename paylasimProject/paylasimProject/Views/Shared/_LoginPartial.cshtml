@@ -10,12 +10,12 @@
         {
             <li>@Html.ActionLink("Urun Ekle","UrunEkleme","UrunEkleme")</li>
             <li>@Html.ActionLink("Urunleri Gor", "urunGoruntule","UrunEkleme")</li>
-            @*<li>@Html.ActionLink("Mesajlasma","Mesajlasma","Home")</li>*@
+            <li>@Html.ActionLink("Mesajlarim", "MesajlariGoruntuleme", "Home")</li>
         }
         else if(Session["yardimalanAdi"] != null)
         {
             <li>@Html.ActionLink("Urunleri Gor","urunGoruntule","UrunEkleme")</li>
-            @*<li>@Html.ActionLink("Mesajlasma","Mesajlasma","Home")</li>*@
+            <li>@Html.ActionLink("Mesajlarim","MesajlariGoruntuleme","Home")</li>
         }
 
     }

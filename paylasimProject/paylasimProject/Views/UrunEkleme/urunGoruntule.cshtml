@@ -19,9 +19,11 @@
 
 <body>
     @{ var icerik = ViewBag.yorumIcerikkk;
-        var yardimAlanAdi = ViewBag.userAdi;
-        var gonulluAdi = ViewBag.userAdi1;
+        var yardimAlanAdi = ViewBag.yardimAdi;
+        var gonulluAdi = ViewBag.gonulluAdi;
         var kId = 0;
+        <p hidden>@yardimAlanAdi</p>
+        <p hidden>@gonulluAdi</p>
         projectPaylasimEntities4 db = new projectPaylasimEntities4();
         foreach (user user in ViewBag.kullaniciListesi)
         {
@@ -31,21 +33,7 @@
             }
         }
     }
-  @*  <h2>@ViewBag.yardimAdi</h2>
-    <h2>@ViewBag.gonulluAdi</h2>
-    <h3>@ViewBag.gonulluID</h3>
-    <h3>@ViewBag.yardimAlanID</h3>*@
-    @*@{ int gonullu_ID;
-            int yardimAlan_ID;
-
-            if (ViewBag.yardimAdi != null) {
-                yardimAlan_ID = ViewBag.yardimAlanID;
-            }
-            else if(ViewBag.gonulluAdi != null)
-            {
-                gonullu_ID = ViewBag.gonulluID;
-            }
-        }*@
+  
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog" style="left:-15px;">
             <div class="modal-content">
@@ -95,12 +83,10 @@
             <th>URUN ADI</th>
             <th>URUN DETAY</th>
             <th>URUN DURUMU</th>
-            <th>URUN ID</th>
+            <th>URUN SAHIBI</th>
             <th>URUN RESMI</th>
             <th>MESAJLASMA</th>
-            <th>Sessionli userid</th>
-            <th>URUN SAHIBI</th>
-
+          
         </tr>
         @foreach (urun u in ViewBag.urunListesi)
         {
@@ -125,16 +111,6 @@
                         gonullu_ID = ViewBag.gonulluID;
                     }
 
-                    //if (yorumm != null)
-                    //{
-                    //    yorumicerik = yorumm.yorumIcerik;
-                    //    yorumYapan = yorumm.userId;
-                    //    yorumSahibi = yorumm.user.userAdi;
-                    //    tarih = yorumm.yorumTarihi.ToString();
-
-                    //}
-                    // burasi eklendi.
-                    // List<string> yorumlarListesi = new List<string>();
                     string yorumlarListesi = string.Empty;
                     string yorumTarihleriListesi = string.Empty;
                     string yorumSahipleriListesi = string.Empty;
@@ -154,26 +130,24 @@
                 <td>@u.urunAdi</td>
                 <td>@u.urunBilgisi</td>
                 <td>@u.urunDurumu</td>
-                <td>@u.urunId</td>
+              
                 @{string urunYolu = u.urunPath;
-                    //var ekleyenUser = u.ekleyenUserId;
+                   
                 }
 
+                @foreach (user user in db.user)
+                {
+                    if (user.userId == @u.ekleyenUserId)
+                    {
+                        <td>@user.userAdi</td>
+                    }
+                }
                 <td>
                     <button type="button" class="btn btn-info btn-default" data-urunId="@u.urunId" data-img="/images/@urunYolu" data-urunAdi="@u.urunAdi" data-yorumTarihi="@yorumTarihleriListesi" data-userID="@yorumYapan" data-userADI="@yorumSahipleriListesi" data-comment="@yorumlarListesi" data-toggle="modal">Resmi Gor</button>
                 </td>
-                <td>@Html.ActionLink("Mesaj At", "Mesajlasma", "Home", new { urunSahibiId = @u.ekleyenUserId}, null)</td>
-                
-                @if (ViewBag.yardimAdi != null)
-                {
-                    <td>@yardimAlan_ID</td>
-                }
-                else if (ViewBag.gonulluAdi != null)
-                {
-                    <td>@gonullu_ID</td>
-                }
-                <td>@u.ekleyenUserId</td>
+                <td>@Html.ActionLink("Mesaj At", "Mesajlasma", "Home", new { urunSahibiId = @u.ekleyenUserId }, null)</td>
 
+               
             </tr>
                     }
     </table>
@@ -187,7 +161,7 @@
             var urunid = $("#urunIdd").text();
             var kullaniciID = $("#kidd").text();
             $.post("../UrunEkleme/urunYorumEkle1", { yorumm: yorumIcerik, kid: kullaniciID, id: urunid }, function (data) {
-                alert(data);
+                alert("Yorum Eklendi");
             });
         }
         $(document).ready(function () {

@@ -29,38 +29,39 @@ namespace paylasimProject.Controllers
 
         public ActionResult Mesajlasma(int urunSahibiId)
         {
-            //  ViewBag.gonderenId = gonderenID; 
             ViewBag.urunSahibiID = urunSahibiId;
             ViewBag.Message = "Mesaj Sayfasina Hosgeldiniz";
             projectPaylasimEntities4 db = new projectPaylasimEntities4();
             var yardimAlan = Session["yardimalanAdi"];
             string yardimAlanAd = string.Empty;
             string gonulluAd = string.Empty;
-            if (yardimAlan != null)
-            {
-                yardimAlanAd += yardimAlan.ToString();
-            }
-            var gonullu = Session["gonulluAdi"];
-            if (gonullu != null)
-            {
-                gonulluAd += gonullu.ToString();
-            }
-            ViewBag.yardimAdi = yardimAlan;
 
-            ViewBag.gonulluAdi = gonullu;
-            var users = db.user.ToList();
-
-            foreach (user u in users)
+            string girisYapanUserAdi = string.Empty;
+            if (Session["yardimalanAdi"] != null)
             {
-                if (u.userKullaniciAdi == yardimAlanAd)
+                girisYapanUserAdi = (string)Session["yardimalanAdi"];
+            }
+            if (Session["gonulluAdi"] != null)
+            {
+                girisYapanUserAdi = (string)Session["gonulluAdi"];
+            }
+
+            var gonderilcekKisi = Request["urunSahibiId"];
+            int gonderilcek_Kisi = int.Parse(gonderilcekKisi);
+            ViewBag.gonderilcekKisi = gonderilcek_Kisi;
+
+            foreach (user u in db.user)
+            {
+
+                if (u.userKullaniciAdi == girisYapanUserAdi)
                 {
-                    var yardimAlanId = u.userId;
-                    ViewBag.yardimAlanID = yardimAlanId;
+                    ViewBag.girisYapanUserAdi = u.userAdi;
+                    ViewBag.girisYapanUserId = u.userId;
                 }
-                else if (u.userKullaniciAdi == gonulluAd)
+                if (u.userId == gonderilcek_Kisi)
                 {
-                    var gonulluId = u.userId;
-                    ViewBag.gonulluID = gonulluId;
+                    ViewBag.gonderilcekKisi = u.userAdi;
+                    ViewBag.gonderilcekKisiId = u.userId;
                 }
             }
 
@@ -70,16 +71,12 @@ namespace paylasimProject.Controllers
 
         public ActionResult Mesajlasma1(int gonderenID)
         {
-            // ViewBag.gonderenID = gonderenID; 
 
             ViewBag.Message = "Mesaj Sayfasina Hosgeldiniz";
-
             projectPaylasimEntities4 db = new projectPaylasimEntities4();
             int girisYapmisUserId = 0;
             string mesajListesi = string.Empty;
-            //    DateTime mesajinGonderilmeTarihi = DateTime.Now;
             string girisYapmisUserAdi = string.Empty;
-            // string mesajIcerigi = string.Empty;
             if (Session["gonulluAdi"] != null)
             {
                 girisYapmisUserAdi = (string)Session["gonulluAdi"];
@@ -94,6 +91,10 @@ namespace paylasimProject.Controllers
                 if (u.userKullaniciAdi == girisYapmisUserAdi)
                 {
                     girisYapmisUserId = u.userId;
+                    ViewBag.girisYapmisUserAdi = u.userAdi;
+                    var gonderen = Request["gonderenID"];
+                    int gonderenId = int.Parse(gonderen);
+                    ViewBag.gonderen = gonderenId;
                     foreach (mesajlar mesaj in db.mesajlar)
                     {
                         if ((mesaj.gonderenId == girisYapmisUserId && mesaj.gonderilenId == gonderenID) || (mesaj.gonderilenId == girisYapmisUserId && mesaj.gonderenId == gonderenID))
@@ -103,6 +104,10 @@ namespace paylasimProject.Controllers
                                 if (us.userId == mesaj.gonderenId)
                                 {
                                     mesajListesi += us.userAdi + ": ";
+                                }
+                                if(us.userId == gonderenId)
+                                {
+                                    ViewBag.gonderilenAdi = us.userAdi;
                                 }
                             }
                             mesajListesi += mesaj.mesajIcerik + "\r\n";
@@ -228,7 +233,7 @@ namespace paylasimProject.Controllers
                 // return Json(gonderenId + "," + gonderilenId + "," + mesaj + "," + konu);
                 //  return RedirectToAction("Index");
                 TempData["sonuc"] = "Mesajiniz Gonderildi";
-                return RedirectToAction("UrunEkleme", "UrunEkleme");
+                return RedirectToAction("urunGoruntule", "UrunEkleme");
             }
             else
             {
@@ -322,24 +327,13 @@ namespace paylasimProject.Controllers
                 {
                     girisYapmisUserId = u.userId;
                     ViewBag.girisYapmisUserId = girisYapmisUserId;
-                    // foreach (mesajlar mesaj in db.mesajlar)
-                    //{
-                    //if (mesaj.gonderilenId == girisYapmisUserId)
-                    //{
-                    //    mesajiGonderenId = mesaj.gonderenId;
-                    //    ViewBag.mesajiGonderenId = mesajiGonderenId;
-                    //    mesajinGonderilmeTarihi = mesaj.gonderilmeTarihi;
-                    //    ViewBag.mesajinGonderilmeTarihi = mesajinGonderilmeTarihi;
-                    //    ViewBag.icerik = mesaj.mesajIcerik;
-                    //}
-                    var mesajListesi = db.mesajlar.ToList();
-                    ViewBag.mesajListesi = mesajListesi;
-                    // }
+                    
                 }
             }
 
+            var userlar = db.user;
 
-            return View();
+                     return View();
         }
     }
 }

@@ -2,13 +2,13 @@
 @{
     ViewBag.Title = "Mesajlasma";
 }
-<h2>@ViewBag.gonderenId</h2>
+@*<h2>@ViewBag.gonderenId</h2>
 <h3>@ViewBag.urunSahibiID</h3>
 <h2>@ViewBag.yardimAdi</h2>
     <h2>@ViewBag.gonulluAdi</h2>
     <h3>@ViewBag.gonulluID</h3>
     <h3>@ViewBag.yardimAlanID</h3>
-<h4>@ViewBag.sonuc</h4>
+<h4>@ViewBag.sonuc</h4>*@
 
 @{ //int gonullu_ID = 0;
    //int yardimAlan_ID = 0;
@@ -20,7 +20,7 @@
         // yardimAlan_ID = ViewBag.yardimAlanID;
         girisYapmisUserId = ViewBag.yardimAlanID;
         // <p>@yardimAlan_ID</p>
-        <p>@girisYapmisUserId</p>
+       // <p>@girisYapmisUserId</p>
     }
     else
     if (ViewBag.gonulluAdi != null)
@@ -28,7 +28,7 @@
         //gonullu_ID = ViewBag.gonulluID;
         girisYapmisUserId = ViewBag.gonulluID;
         // <p>@gonullu_ID</p>
-         <p>@girisYapmisUserId</p>
+        // <p>@girisYapmisUserId</p>
         }
 
 }
@@ -45,7 +45,9 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="sender">Kimden</label>
                             <div class="col-md-9">
-                                <input id="sender" name="sender" type="text" value="@girisYapmisUserId" class="form-control">
+                          
+                                <label class="col-md-3 control-label" for="sender">@ViewBag.girisYapanUserAdi</label>
+                                    <input id="sender" name="sender" type="hidden" value="@ViewBag.girisYapanUserId" class="form-control">
                             </div>
                         </div>
                         
@@ -53,7 +55,9 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="receiver">Kime</label>
                             <div class="col-md-9">
-                                <input id="receiver" name="receiver" type="text" value="@Request["urunSahibiId"]" class="form-control">
+
+                                <label class="col-md-3 control-label" for="receiver">@ViewBag.gonderilcekKisi</label>
+                                <input id="receiver" name="receiver" type="hidden" value="@ViewBag.gonderilcekKisiId" class="form-control">
                             </div>
                             @*<input type="hidden" name="urunSahibiId" value='@Request["urunSahibiId"]' />*@
                         </div>
