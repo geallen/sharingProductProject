@@ -7,6 +7,7 @@
 <table class="table">
     <tr>
         <th>Gonderen</th>
+        <th>Gonderilen</th>
         <th>Gonderilme Tarihi</th>
     </tr>
     
@@ -34,24 +35,32 @@ SELECT gonderilmeTarihi FROM db.mesajlar ORDER BY EventDate DESC
         }
     }*@
 
-     @{ projectPaylasimEntities4 db = new projectPaylasimEntities4();
-        foreach (mesajlar mesaj in db.mesajlar)
-        {
-            if (mesaj.gonderilenId == ViewBag.girisYapmisUserId)
-            {
+     @{ projectPaylasimEntities6 db = new projectPaylasimEntities6();
+         foreach (mesajlar mesaj in db.mesajlars.ToList())
+         {
+
+             if ((mesaj.gonderilenId == ViewBag.girisYapmisUserId) || (mesaj.gonderenId == ViewBag.girisYapmisUserId))
+             {
                 <tr>
-                    @foreach (user user in db.user)
+                    @foreach (user us in db.users)
                     {
-                        if (user.userId == mesaj.gonderenId)
+                        if (us.userId == mesaj.gonderenId)
                         {
-                            <td>@user.userAdi</td>
+                            <td>@us.userAdi</td>
+                        }
+                        if (us.userId == mesaj.gonderilenId)
+                        {
+                            <td>@us.userAdi</td>
                         }
                     }
+                    <td>@mesaj.gonderenId</td>
+                    <td>@mesaj.gonderilenId</td>
                     <td>@mesaj.gonderilmeTarihi</td>
                    
-                    <td>@Html.ActionLink("Mesaji Gor","Mesajlasma1","Home", new { gonderenID = @mesaj.gonderenId }, null)</td>
+                    <td>@Html.ActionLink("Mesaji Gor", "Mesajlasma1", "Home", new { gonderenID = @mesaj.gonderenId }, null)</td>
                 </tr>
-            }
-        }
+                        }
+                    }
+                
     }
 </table>

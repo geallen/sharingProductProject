@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="projectPaylasimModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="projectPaylasimModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="mesajlar">
     <Key>
       <PropertyRef Name="mesajId" />
@@ -7,38 +7,28 @@
     <Property Name="mesajId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="gonderenId" Type="int" Nullable="false" />
     <Property Name="gonderilenId" Type="int" Nullable="false" />
-    <Property Name="mesajIcerik" Type="nvarchar(max)" />
-    <Property Name="mesajKonusu" Type="nvarchar" MaxLength="50" />
+    <Property Name="mesajIcerik" Type="varchar" MaxLength="255" />
+    <Property Name="mesajKonusu" Type="varchar" MaxLength="50" />
     <Property Name="gonderilmeTarihi" Type="date" Nullable="false" />
   </EntityType>
   <EntityType Name="rezerv">
     <Key>
       <PropertyRef Name="rezervId" />
     </Key>
-    <Property Name="rezervId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="rezervId" Type="int" Nullable="false" />
     <Property Name="urunId" Type="int" Nullable="false" />
     <Property Name="userId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="urun">
     <Key>
       <PropertyRef Name="urunId" />
     </Key>
     <Property Name="urunId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="urunAdi" Type="nvarchar" MaxLength="50" />
-    <Property Name="urunResmi" Type="nvarchar" MaxLength="50" />
-    <Property Name="urunDurumu" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="urunBilgisi" Type="nvarchar(max)" />
-    <Property Name="urunPath" Type="nvarchar(max)" />
+    <Property Name="urunAdi" Type="varchar" MaxLength="50" />
+    <Property Name="urunResmi" Type="varchar" MaxLength="50" />
+    <Property Name="urunDurumu" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="urunBilgisi" Type="varchar" MaxLength="250" />
+    <Property Name="urunPath" Type="varchar" MaxLength="250" />
     <Property Name="ekleyenUserId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="user">
@@ -46,14 +36,14 @@
       <PropertyRef Name="userId" />
     </Key>
     <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="userAdi" Type="nvarchar" MaxLength="50" />
-    <Property Name="userSoyadi" Type="nvarchar" MaxLength="50" />
-    <Property Name="userAdres" Type="nvarchar" MaxLength="50" />
-    <Property Name="userTel" Type="nvarchar" MaxLength="50" />
-    <Property Name="userMail" Type="nvarchar" MaxLength="50" />
-    <Property Name="userKullaniciAdi" Type="nvarchar" MaxLength="50" />
-    <Property Name="userSifre" Type="nvarchar" MaxLength="50" />
-    <Property Name="userTipi" Type="nvarchar" MaxLength="50" />
+    <Property Name="userAdi" Type="varchar" MaxLength="50" />
+    <Property Name="userSoyadi" Type="varchar" MaxLength="50" />
+    <Property Name="userAdres" Type="varchar" MaxLength="50" />
+    <Property Name="userTel" Type="varchar" MaxLength="50" />
+    <Property Name="userMail" Type="varchar" MaxLength="50" />
+    <Property Name="userKullaniciAdi" Type="varchar" MaxLength="50" />
+    <Property Name="userSifre" Type="varchar" MaxLength="50" />
+    <Property Name="userTipi" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="yorum">
     <Key>
@@ -61,11 +51,35 @@
     </Key>
     <Property Name="yorumId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="yorumTarihi" Type="date" />
-    <Property Name="yorumIcerik" Type="nvarchar(max)" />
+    <Property Name="yorumIcerik" Type="varchar" MaxLength="50" />
     <Property Name="userId" Type="int" Nullable="false" />
     <Property Name="urunId" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="FK_mesajlar_user">
+  <Association Name="fk_ekleyenuserId">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="urun" Type="Self.urun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="urun">
+        <PropertyRef Name="ekleyenUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_gonderenId">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="mesajlar" Type="Self.mesajlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="mesajlar">
+        <PropertyRef Name="gonderenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_gonderilenId">
     <End Role="user" Type="Self.user" Multiplicity="1" />
     <End Role="mesajlar" Type="Self.mesajlar" Multiplicity="*" />
     <ReferentialConstraint>
@@ -77,19 +91,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_mesajlar_user1">
-    <End Role="user" Type="Self.user" Multiplicity="1" />
-    <End Role="mesajlar" Type="Self.mesajlar" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="userId" />
-      </Principal>
-      <Dependent Role="mesajlar">
-        <PropertyRef Name="gonderilenId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_rezerv_urun">
+  <Association Name="fk_urunId">
     <End Role="urun" Type="Self.urun" Multiplicity="1" />
     <End Role="rezerv" Type="Self.rezerv" Multiplicity="*" />
     <ReferentialConstraint>
@@ -101,19 +103,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_rezerv_user">
-    <End Role="user" Type="Self.user" Multiplicity="1" />
-    <End Role="rezerv" Type="Self.rezerv" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="userId" />
-      </Principal>
-      <Dependent Role="rezerv">
-        <PropertyRef Name="userId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_yorum_urun">
+  <Association Name="fk_urunIdd">
     <End Role="urun" Type="Self.urun" Multiplicity="1" />
     <End Role="yorum" Type="Self.yorum" Multiplicity="*" />
     <ReferentialConstraint>
@@ -125,7 +115,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_yorum_user">
+  <Association Name="fk_userId">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="rezerv" Type="Self.rezerv" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="rezerv">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_userIdd">
     <End Role="user" Type="Self.user" Multiplicity="1" />
     <End Role="yorum" Type="Self.yorum" Multiplicity="*" />
     <ReferentialConstraint>
@@ -138,33 +140,36 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="projectPaylasimModelStoreContainer">
-    <EntitySet Name="mesajlar" EntityType="Self.mesajlar" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="rezerv" EntityType="Self.rezerv" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="urun" EntityType="Self.urun" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="yorum" EntityType="Self.yorum" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_mesajlar_user" Association="Self.FK_mesajlar_user">
+    <EntitySet Name="mesajlar" EntityType="Self.mesajlar" Schema="projectPaylasim" store:Type="Tables" />
+    <EntitySet Name="rezerv" EntityType="Self.rezerv" Schema="projectPaylasim" store:Type="Tables" />
+    <EntitySet Name="urun" EntityType="Self.urun" Schema="projectPaylasim" store:Type="Tables" />
+    <EntitySet Name="user" EntityType="Self.user" Schema="projectPaylasim" store:Type="Tables" />
+    <EntitySet Name="yorum" EntityType="Self.yorum" Schema="projectPaylasim" store:Type="Tables" />
+    <AssociationSet Name="fk_ekleyenuserId" Association="Self.fk_ekleyenuserId">
+      <End Role="user" EntitySet="user" />
+      <End Role="urun" EntitySet="urun" />
+    </AssociationSet>
+    <AssociationSet Name="fk_gonderenId" Association="Self.fk_gonderenId">
       <End Role="user" EntitySet="user" />
       <End Role="mesajlar" EntitySet="mesajlar" />
     </AssociationSet>
-    <AssociationSet Name="FK_mesajlar_user1" Association="Self.FK_mesajlar_user1">
+    <AssociationSet Name="fk_gonderilenId" Association="Self.fk_gonderilenId">
       <End Role="user" EntitySet="user" />
       <End Role="mesajlar" EntitySet="mesajlar" />
     </AssociationSet>
-    <AssociationSet Name="FK_rezerv_urun" Association="Self.FK_rezerv_urun">
+    <AssociationSet Name="fk_urunId" Association="Self.fk_urunId">
       <End Role="urun" EntitySet="urun" />
       <End Role="rezerv" EntitySet="rezerv" />
     </AssociationSet>
-    <AssociationSet Name="FK_rezerv_user" Association="Self.FK_rezerv_user">
-      <End Role="user" EntitySet="user" />
-      <End Role="rezerv" EntitySet="rezerv" />
-    </AssociationSet>
-    <AssociationSet Name="FK_yorum_urun" Association="Self.FK_yorum_urun">
+    <AssociationSet Name="fk_urunIdd" Association="Self.fk_urunIdd">
       <End Role="urun" EntitySet="urun" />
       <End Role="yorum" EntitySet="yorum" />
     </AssociationSet>
-    <AssociationSet Name="FK_yorum_user" Association="Self.FK_yorum_user">
+    <AssociationSet Name="fk_userId" Association="Self.fk_userId">
+      <End Role="user" EntitySet="user" />
+      <End Role="rezerv" EntitySet="rezerv" />
+    </AssociationSet>
+    <AssociationSet Name="fk_userIdd" Association="Self.fk_userIdd">
       <End Role="user" EntitySet="user" />
       <End Role="yorum" EntitySet="yorum" />
     </AssociationSet>

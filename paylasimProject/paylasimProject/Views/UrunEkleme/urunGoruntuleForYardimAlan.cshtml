@@ -1,8 +1,7 @@
 ﻿
 @{
-    ViewBag.Title = "Urun Goruntule";
+    ViewBag.Title = "urunGoruntuleForYardimAlan";
 }
-
 
 <!DOCTYPE html>
 
@@ -33,7 +32,7 @@
             }
         }
     }
-  
+
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog" style="left:-15px;">
             <div class="modal-content">
@@ -82,14 +81,16 @@
         <tr>
             <th>URUN ADI</th>
             <th>URUN DETAY</th>
-            <th>URUN DURUMU</th>
+           
             <th>URUN SAHIBI</th>
             <th>URUN RESMI</th>
-            @*<th>MESAJLASMA</th>*@
-          
+            <th>MESAJLASMA</th>
+            <th>URUNU REZERV ET</th>
         </tr>
         @foreach (urun u in ViewBag.urunListesi)
         {
+            if (u.urunDurumu == "1")
+            {
             <tr>
                 @{
                     //   var yorumm = u.yorum.ToList();
@@ -100,16 +101,19 @@
                     DateTime yorum_tarihi = DateTime.Now;
                     string tarih = yorum_tarihi.ToLongDateString();
 
-                    int gonullu_ID = 0;
-                    int yardimAlan_ID = 0;
-
+//                    int gonullu_ID = 0;
+  //                  int yardimAlan_ID = 0;
+                    int girisYapmisUserId = 0;
+                    string girisYapmisUserAdi = string.Empty;
                     if (ViewBag.yardimAdi != null)
                     {
-                        yardimAlan_ID = ViewBag.yardimAlanID;
+                        // yardimAlan_ID = ViewBag.yardimAlanID;
+                        girisYapmisUserId = ViewBag.yardimAlanID;
                     }
                     else if (ViewBag.gonulluAdi != null)
                     {
-                        gonullu_ID = ViewBag.gonulluID;
+                        // gonullu_ID = ViewBag.gonulluID;
+                        girisYapmisUserId = ViewBag.gonulluID;
                     }
 
                     string yorumlarListesi = string.Empty;
@@ -130,31 +134,35 @@
 
                 <td>@u.urunAdi</td>
                 <td>@u.urunBilgisi</td>
-                @if (u.urunDurumu == "1")
-                {
-                <td>UYGUN</td>
-                }else if(u.urunDurumu == "2")
-                {
-                    <td>REZERVE</td>
-                }
+              
                 @{string urunYolu = u.urunPath;
-                   
+
                 }
 
-                @foreach (user user in db.users)
+                @foreach (user us in db.users)
                 {
-                    if (user.userId == @u.ekleyenUserId)
+                    if (us.userId == @u.ekleyenUserId)
                     {
-                        <td>@user.userAdi</td>
+                        <td>@us.userAdi</td>
+                    }
+                }
+
+                @foreach(user user in db.users)
+                {
+                    if(user.userId == girisYapmisUserId)
+                    {
+                        girisYapmisUserAdi = user.userAdi;
                     }
                 }
                 <td>
                     <button type="button" class="btn btn-info btn-default" data-urunId="@u.urunId" data-img="/images/@urunYolu" data-urunAdi="@u.urunAdi" data-yorumTarihi="@yorumTarihleriListesi" data-userID="@yorumYapan" data-userADI="@yorumSahipleriListesi" data-comment="@yorumlarListesi" data-toggle="modal">Resmi Gor</button>
                 </td>
-                @*<td>@Html.ActionLink("Mesaj At", "Mesajlasma", "Home", new { urunSahibiId = @u.ekleyenUserId }, null)</td>*@
+                <td>@Html.ActionLink("Mesaj At", "Mesajlasma", "Home", new { urunSahibiId = @u.ekleyenUserId }, null)</td>
 
-               
+                <td>@Html.ActionLink("Rezerv Et","ListeyeEkle","Home", new { urunSahibiId = @u.ekleyenUserId, urunId = @u.urunId, urunAdi = @u.urunAdi, yardimAlanId = girisYapmisUserId, yardimAlanAd = girisYapmisUserAdi }, null)</td>
+
             </tr>
+               }
                     }
     </table>
 

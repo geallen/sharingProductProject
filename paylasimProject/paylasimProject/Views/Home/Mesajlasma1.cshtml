@@ -2,100 +2,98 @@
 @{
     ViewBag.Title = "Mesajlasma1";
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 
-<h2>@ViewBag.Message</h2>
+<body>
+    <h2>@ViewBag.Message</h2>
+    <h4>@ViewBag.deneme</h4>
+    @{ var gonderen = @Request["gonderenID"];
+    }
 
-<h4>@ViewBag.sonucc</h4>
-<h4>@ViewBag.deneme</h4>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog" style="left:-15px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <center> <h4 class="modal-title" id="urunADI">MESAJ GONDER</h4></center>
+                </div>
+                <div class="modal-body">
+                    <div class="well well-sm">
+                        <form class="form-horizontal" method="post" action="../Home/mesajiGonderme">
+                            <fieldset>
+                                <input id="sender" name="kimden" type="hidden" value="@ViewBag.girisYapmisUserId" class="form-control">
+                                <input id="receiver" name="kime" type="hidden" value="@ViewBag.gonderen" class="form-control">
+                                <label class="col-md-3 control-label" for="subject">Konu</label>
+                                <input id="mesajKonusu" name="mesajKonusu" type="text" placeholder="Konu" class="form-control">
+                                <br />
+                                <label class="col-md-3 control-label" for="message">Mesaj</label>
+                                <textarea class="form-control" id="mesajIcerik" name="mesajIcerik" rows="5"></textarea>
+                                <button type="submit" class="btn btn-primary btn-lg"><center>Gonder</center></button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
 
-<h4>@ViewBag.sonuc</h4>
-
-@{ var gonderen = @Request["gonderenID"];
-}
-
-<br />
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="well well-sm">
-                <form class="form-horizontal" method="post" action="../Home/Mesajlasma1">
-                    <fieldset>
-                        <legend class="text-center">Mesaj Gonder</legend>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="sender">Kimden</label>
-                            <div class="col-md-9">
-                                <label class="col-md-3 control-label" for="sender">@ViewBag.girisYapmisUserAdi</label>
-                                <input id="sender" name="gonderenId" type="hidden" value="@ViewBag.girisYapmisUserId" class="form-control">
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="receiver">Kime</label>
-                            <div class="col-md-9">
-                                <label class="col-md-3 control-label" for="sender">@ViewBag.gonderilenAdi</label>
-                                <input id="receiver" name="gonderilenId" type="hidden" value="@ViewBag.gonderen" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="message">Onceki Mesajlar</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" id="oncekiler" name="oncekiler" placeholder="@ViewBag.mesajListesi" rows="5"></textarea>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="subject">Konu</label>
-                            <div class="col-md-9">
-                                <input id="konu" name="konu" type="text" placeholder="Konu" class="form-control">
-                            </div>
-                        </div>
-
-
-                        <!-- Message body -->
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="message">Mesaj Icerigi</label>
-                            <div class="col-md-9">
-                                <textarea class="form-control" id="message" name="mesaj" placeholder="Mesajinizi buraya giriniz..." rows="5"></textarea>
-                            </div>
-                        </div>
-
-                        <!-- Form actions -->
-                        <div class="form-group">
-                            <div class="col-md-12 text-right">
-                                <button type="submit" class="btn btn-primary btn-lg">Gonder</button>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-@*<script>
-        function mesajGonder() {
-            var _gonderilenId = $("#receiver").val();
+    <br />
+    <table class="table">
+        <tr>
+            <th>KIMDEN</th>
+            <th>KONU</th>
+            <th>MESAJ ICERIGI</th>
+        </tr>
+        <tr>
 
-            // int formID = int.Parse(gonderilenId.First());
-            var a = parseInt(_gonderilenId);
+            @{ projectPaylasimEntities6 db = new projectPaylasimEntities6();
 
-            var _gonderenId = $("#sender").val();
-            var b = parseInt(_gonderenId);
-            alert(a + "," + b);
-            var c = a + b;
-            alert(typeof b);
-            alert(typeof a);
-            //var d = gonderenId + gonderilenId;
-            var mesaj = $("#message").val();
-            var konu = $("#konu").val();
-            $.post("../Home/Mesajlasma1", { gonderenId: b, gonderilenId: a, mesaj: mesaj, konu: konu }, function (data) {
+                foreach (mesajlar mesaj in db.mesajlars.ToList())
+                {
+                    if (((mesaj.gonderilenId == ViewBag.girisYapmisUserId) && (mesaj.gonderenId == ViewBag.gonderen)) || ((mesaj.gonderenId == ViewBag.girisYapmisUserId) && (mesaj.gonderilenId == ViewBag.gonderen)))
+                    {
+                    <tr>
+                        @foreach (user us in db.users)
+                    {
+                        if (us.userId == mesaj.gonderenId)
+                        {
+                                <td>@us.userAdi</td>
+                            }
 
+                        }
+                        <td>@mesaj.mesajKonusu</td>
+                        <td>@mesaj.mesajIcerik</td>
+
+                        @if (mesaj.gonderenId != 3)
+                        {
+                            <td>
+                                <button type="button" class="btn btn-info btn-default" data-toggle="modal" data-gonderen="@ViewBag.girisYapmisUserId" data-gonderilcekKisi="@mesaj.gonderenId" data-target="#myModal">Cevapla</button>
+                            </td>
+                        }
+                    </tr>
+                    }
+                }
+            }
+        </table>
+
+
+        <script>
+            $(document).ready(function () {
+                $(".btn").click(function () {
+                    $("#myModal").modal("toggle");
+                });
             });
-            //  alert(gonderenId + gonderilenId);
-
-        }
-
-    </script>*@
+        </script>
+    </body>
+</html>

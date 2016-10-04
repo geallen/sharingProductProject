@@ -4,19 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d716b914e5c544488df691b667b83e47" Name="Diagram1">
-        <EntityTypeShape EntityType="projectPaylasimModel.rezerv" Width="1.5" PointX="3.5" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="projectPaylasimModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="projectPaylasimModel.urun" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="projectPaylasimModel.user" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="projectPaylasimModel.yorum" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="projectPaylasimModel.FK_rezerv_urun" ManuallyRouted="false" />
-        <AssociationConnector Association="projectPaylasimModel.FK_rezerv_user" ManuallyRouted="false" />
-        <AssociationConnector Association="projectPaylasimModel.FK_yorum_urun" ManuallyRouted="false" />
-        <AssociationConnector Association="projectPaylasimModel.FK_yorum_user" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="projectPaylasimModel.mesajlar" Width="1.5" PointX="3" PointY="7" />
-        <AssociationConnector Association="projectPaylasimModel.FK_mesajlar_user" />
-        <AssociationConnector Association="projectPaylasimModel.FK_mesajlar_user1" />
+      <Diagram DiagramId="fa9c38fe732e4371926e1de02a7ba4c4" Name="Diagram1">
+        <EntityTypeShape EntityType="projectPaylasimModel.mesajlar" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="projectPaylasimModel.rezerv" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="projectPaylasimModel.urun" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="projectPaylasimModel.user" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="projectPaylasimModel.yorum" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
+        <AssociationConnector Association="projectPaylasimModel.fk_gonderenId" ManuallyRouted="false" />
+        <AssociationConnector Association="projectPaylasimModel.fk_gonderilenId" ManuallyRouted="false" />
+        <AssociationConnector Association="projectPaylasimModel.fk_urunId" ManuallyRouted="false" />
+        <AssociationConnector Association="projectPaylasimModel.fk_userId" ManuallyRouted="false" />
+        <AssociationConnector Association="projectPaylasimModel.fk_ekleyenuserId" ManuallyRouted="false" />
+        <AssociationConnector Association="projectPaylasimModel.fk_urunIdd" ManuallyRouted="false" />
+        <AssociationConnector Association="projectPaylasimModel.fk_userIdd" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

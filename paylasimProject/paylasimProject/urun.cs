@@ -17,8 +17,8 @@ namespace paylasimProject
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public urun()
         {
-            this.rezerv = new HashSet<rezerv>();
-            this.yorum = new HashSet<yorum>();
+            this.rezervs = new HashSet<rezerv>();
+            this.yorums = new HashSet<yorum>();
         }
     
         public int urunId { get; set; }
@@ -30,8 +30,9 @@ namespace paylasimProject
         public int ekleyenUserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<rezerv> rezerv { get; set; }
+        public virtual ICollection<rezerv> rezervs { get; set; }
+        public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<yorum> yorum { get; set; }
+        public virtual ICollection<yorum> yorums { get; set; }
     }
 }

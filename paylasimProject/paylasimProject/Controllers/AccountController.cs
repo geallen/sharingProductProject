@@ -70,12 +70,12 @@ namespace paylasimProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                projectPaylasimEntities4 db = new projectPaylasimEntities4();
-
+                // projectPaylasimEntities4 db = new projectPaylasimEntities4();
+                projectPaylasimEntities6 db = new projectPaylasimEntities6();
                 //var gonullu = db.user.Where(g => g.userKullaniciAdi == model.Kullanici_Adi && g.userSifre == model.Sifre && g.userTipi == model.KullaniciTipi);
                 //var yardimAlan = db.user.Where(g => g.userKullaniciAdi == model.Kullanici_Adi && g.userSifre == model.Sifre && g.userTipi == model.KullaniciTipi);
 
-                var kullanici = db.user.Where(g => g.userKullaniciAdi == model.Kullanici_Adi && g.userSifre == model.Sifre);
+                var kullanici = db.users.Where(g => g.userKullaniciAdi == model.Kullanici_Adi && g.userSifre == model.Sifre);
 
                 if (kullanici.Count<user>() > 0)
                 {
@@ -487,7 +487,7 @@ namespace paylasimProject.Controllers
         {
             try
             {
-                projectPaylasimEntities4 db = new projectPaylasimEntities4();
+                projectPaylasimEntities6 db = new projectPaylasimEntities6();
                 user kullanici = new user();
                 kullanici.userAdi = ad;
                 kullanici.userSoyadi = soyad;
@@ -497,7 +497,7 @@ namespace paylasimProject.Controllers
                 kullanici.userTipi = kullaniciTuru;
                 kullanici.userKullaniciAdi = kullaniciAdi;
                 kullanici.userSifre = sifre;
-                db.user.Add(kullanici);
+                db.users.Add(kullanici);
                 db.SaveChanges();
 
 

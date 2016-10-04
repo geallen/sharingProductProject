@@ -165,3 +165,6 @@ C:\Users\Gamze\Music\paylasimProject\paylasimProject\bin\Microsoft.Owin.Security
 C:\Users\Gamze\Music\paylasimProject\paylasimProject\obj\Debug\paylasimProject.csprojResolveAssemblyReference.cache
 C:\Users\Gamze\Music\paylasimProject\paylasimProject\obj\Debug\paylasimProject.dll
 C:\Users\Gamze\Music\paylasimProject\paylasimProject\obj\Debug\paylasimProject.pdb
+C:\Users\Gamze\Documents\Visual Studio 2015\Projects\paylasimProject\paylasimProject\bin\MySql.Data.dll
+C:\Users\Gamze\Documents\Visual Studio 2015\Projects\paylasimProject\paylasimProject\bin\MySql.Data.Entity.EF6.dll
+C:\Users\Gamze\Documents\Visual Studio 2015\Projects\paylasimProject\paylasimProject\bin\MySql.Web.dll

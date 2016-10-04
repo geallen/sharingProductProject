@@ -13,10 +13,10 @@ namespace paylasimProject
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class projectPaylasimEntities4 : DbContext
+    public partial class projectPaylasimEntities6 : DbContext
     {
-        public projectPaylasimEntities4()
-            : base("name=projectPaylasimEntities4")
+        public projectPaylasimEntities6()
+            : base("name=projectPaylasimEntities6")
         {
         }
     
@@ -25,11 +25,10 @@ namespace paylasimProject
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<rezerv> rezerv { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<urun> urun { get; set; }
-        public virtual DbSet<user> user { get; set; }
-        public virtual DbSet<yorum> yorum { get; set; }
-        public virtual DbSet<mesajlar> mesajlar { get; set; }
+        public virtual DbSet<mesajlar> mesajlars { get; set; }
+        public virtual DbSet<rezerv> rezervs { get; set; }
+        public virtual DbSet<urun> uruns { get; set; }
+        public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<yorum> yorums { get; set; }
     }
 }

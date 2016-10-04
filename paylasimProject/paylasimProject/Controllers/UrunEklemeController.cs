@@ -13,7 +13,7 @@ namespace paylasimProject.Controllers
         // GET: UrunEkleme
         public ActionResult UrunEkleme()
         {
-            projectPaylasimEntities4 db = new projectPaylasimEntities4();
+            projectPaylasimEntities6 db = new projectPaylasimEntities6();
             var yardimAlan = Session["yardimalanAdi"];
             string yardimAlanAd = string.Empty;
             string gonulluAd = string.Empty;
@@ -29,7 +29,7 @@ namespace paylasimProject.Controllers
             ViewBag.yardimAdi = yardimAlan;
 
             ViewBag.gonulluAdi = gonullu;
-            var users = db.user.ToList();
+            var users = db.users.ToList();
 
             foreach (user u in users)
             {
@@ -51,7 +51,7 @@ namespace paylasimProject.Controllers
 
         [AcceptVerbs(HttpVerbs.Post)]
         [HttpPost]
-        public ActionResult UrunEkleme(UrunEklemeEkrani model, string url)
+        public ActionResult UrunEkleme(string urundurumu,UrunEklemeEkrani model, string url)
         {
             string FileName = Path.GetFileName(model.UrunResmi.FileName);
             string uzantisizResimAdi = Path.GetFileNameWithoutExtension(model.UrunResmi.FileName);
@@ -61,8 +61,8 @@ namespace paylasimProject.Controllers
             //ViewBag.uzantisizResimAdi = uzantisizResimAdi;
 
 
-            projectPaylasimEntities4 db = new projectPaylasimEntities4();
-            
+            //   projectPaylasimEntities4 db = new projectPaylasimEntities4();
+            projectPaylasimEntities6 db = new projectPaylasimEntities6();
             string gonulluAd = string.Empty;
             
             var gonullu = Session["gonulluAdi"];
@@ -73,7 +73,7 @@ namespace paylasimProject.Controllers
            
 
             ViewBag.gonulluAdi = gonullu;
-            var users = db.user.ToList();
+            var users = db.users.ToList();
            // string y = null;
             int gonulluId = 0;
             foreach (user u in users)
@@ -86,7 +86,7 @@ namespace paylasimProject.Controllers
             }
 
 
-            string sonuc = urunEkle(model.UrunAdi, model.UrunDurumu, model.UrunBilgisi, gonulluId, uzantisizResimAdi, FileName);
+            string sonuc = urunEkle(model.UrunAdi, urundurumu, model.UrunBilgisi, gonulluId, uzantisizResimAdi, FileName);
 
             ViewBag.sonuc = sonuc;
             if (sonuc == "Ekleme Basarili")
@@ -108,10 +108,11 @@ namespace paylasimProject.Controllers
 
         public ActionResult urunGoruntule()
         {
-            projectPaylasimEntities4 db = new projectPaylasimEntities4();
-            var urunler = db.urun.ToList();
+            //  projectPaylasimEntities4 db = new projectPaylasimEntities4();
+            projectPaylasimEntities6 db = new projectPaylasimEntities6();
+            var urunler = db.uruns.ToList();
             ViewBag.urunListesi = urunler;
-            var kullanicilar = db.user.ToList();
+            var kullanicilar = db.users.ToList();
             ViewBag.kullaniciListesi = kullanicilar;
             var yardimAlan = Session["yardimalanAdi"];
             string yardimAlanAd = string.Empty;
@@ -128,7 +129,7 @@ namespace paylasimProject.Controllers
             ViewBag.yardimAdi = yardimAlan;
            
             ViewBag.gonulluAdi = gonullu;
-            var users = db.user.ToList();
+            var users = db.users.ToList();
 
             foreach(user u in users)
             {
@@ -147,50 +148,98 @@ namespace paylasimProject.Controllers
             return View();
         }
 
-        [HttpPost]
-        public JsonResult urunYorumEkle1(string yorumm, int kid,  int id)
+        public ActionResult urunGoruntuleForYardimAlan()
         {
-            projectPaylasimEntities4 database = new projectPaylasimEntities4();
+            //  projectPaylasimEntities4 db = new projectPaylasimEntities4();
+            projectPaylasimEntities6 db = new projectPaylasimEntities6();
+            var urunler = db.uruns.ToList();
+            ViewBag.urunListesi = urunler;
+            var kullanicilar = db.users.ToList();
+            ViewBag.kullaniciListesi = kullanicilar;
+            var yardimAlan = Session["yardimalanAdi"];
+            string yardimAlanAd = string.Empty;
+            string gonulluAd = string.Empty;
+            if (yardimAlan != null)
+            {
+                yardimAlanAd += yardimAlan.ToString();
+            }
+            var gonullu = Session["gonulluAdi"];
+            if (gonullu != null)
+            {
+                gonulluAd += gonullu.ToString();
+            }
+            ViewBag.yardimAdi = yardimAlan;
+
+            ViewBag.gonulluAdi = gonullu;
+            var users = db.users.ToList();
+
+            foreach (user u in users)
+            {
+                if (u.userKullaniciAdi == yardimAlanAd)
+                {
+                    var yardimAlanId = u.userId;
+                    ViewBag.yardimAlanID = yardimAlanId;
+                }
+                else if (u.userKullaniciAdi == gonulluAd)
+                {
+                    var gonulluId = u.userId;
+                    ViewBag.gonulluID = gonulluId;
+                }
+            }
+
+            return View();
+        }
+    
+        [HttpPost]
+        public ActionResult urunYorumEkle1(string yorumm, int kid,  int id)
+        {
+            //  projectPaylasimEntities4 database = new projectPaylasimEntities4();
+            projectPaylasimEntities6 database = new projectPaylasimEntities6();
             yorum yorum1 = new yorum();
             yorum1.yorumTarihi = DateTime.Now;
             yorum1.yorumIcerik = yorumm;
             yorum1.userId = kid;
             yorum1.urunId = id;
 
-            database.yorum.Add(yorum1);
+            database.yorums.Add(yorum1);
             database.SaveChanges();
-            return Json(yorumm+","+id.ToString());
+           // return Json(yorumm+","+id.ToString());
+            return RedirectToAction("Login", "Account");
         }
 
 
         public ActionResult urunBilgileri()
         {
-            projectPaylasimEntities4 db = new projectPaylasimEntities4();
-            var urunler = db.urun.ToList();
+            //  projectPaylasimEntities4 db = new projectPaylasimEntities4();
+            projectPaylasimEntities6 db = new projectPaylasimEntities6();
+            var urunler = db.uruns.ToList();
             ViewBag.urunListesi = urunler;
 
 
             return View();
         }
 
+      
         public string urunEkle(string urunAdi, string urunDurumu, string urunBilgisi, int userId, string resimAdi, string urunPath)
         {
             try
             {
-                projectPaylasimEntities4 db = new projectPaylasimEntities4();
+                //   projectPaylasimEntities4 db = new projectPaylasimEntities4();
+                projectPaylasimEntities6 db = new projectPaylasimEntities6();
                 urun u = new urun();
                 string urunAdiSonHali = urunAdi.ToUpper();
 
                 u.urunAdi = urunAdiSonHali;
                 u.urunResmi = resimAdi;
-                urunDurumu = urunDurumu.Replace(" ", String.Empty);
-                string urunDurumuSonHali = urunDurumu.ToUpper();
-                u.urunDurumu = urunDurumuSonHali;
+                //  urunDurumu = urunDurumu.Replace(" ", String.Empty);
+                //string urunDurumuSonHali = urunDurumu.ToUpper();
+                //u.urunDurumu = urunDurumuSonHali;
+                u.urunDurumu = urunDurumu;
                 u.urunBilgisi = urunBilgisi;
                 u.urunPath = urunPath;
                 u.ekleyenUserId = userId;
 
-                db.urun.Add(u);
+                db.uruns.Add(u);
                 db.SaveChanges();
                 return "Ekleme Basarili";
             }
