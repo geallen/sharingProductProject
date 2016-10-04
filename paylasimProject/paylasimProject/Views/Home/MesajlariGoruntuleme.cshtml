@@ -10,37 +10,12 @@
         <th>Gonderilen</th>
         <th>Gonderilme Tarihi</th>
     </tr>
-    
-    @*DOGRUSU 
-        @{ projectPaylasimEntities4 db = new projectPaylasimEntities4();
-        foreach (mesajlar mesaj in db.mesajlar)
+
+    @{ projectPaylasimEntities6 db = new projectPaylasimEntities6();
+        foreach (mesajlar mesaj in db.mesajlars.ToList())
         {
-            if (mesaj.gonderilenId == ViewBag.girisYapmisUserId)
+            if ((mesaj.gonderilenId == ViewBag.girisYapmisUserId) || (mesaj.gonderenId == ViewBag.girisYapmisUserId))
             {
-                <tr>
-                    @foreach (user user in db.user)
-                    {
-                        if (user.userId == mesaj.gonderenId)
-                        {
-                            <td>@user.userAdi</td>
-                        }
-                    }
-SELECT gonderilmeTarihi FROM db.mesajlar ORDER BY EventDate DESC
-                  <td>SELECT @mesaj.gonderilmeTarihi FROM db.mesajlar ORDER BY CONVERT(DateTime, gonderilmeTarihi,101)  DESC</td>
-                    <td>@mesaj.gonderilmeTarihi</td>
-                   
-                    <td>@Html.ActionLink("Mesaji Gor","Mesajlasma1","Home", new { gonderenID = @mesaj.gonderenId }, null)</td>
-                </tr>
-            }
-        }
-    }*@
-
-     @{ projectPaylasimEntities6 db = new projectPaylasimEntities6();
-         foreach (mesajlar mesaj in db.mesajlars.ToList())
-         {
-
-             if ((mesaj.gonderilenId == ViewBag.girisYapmisUserId) || (mesaj.gonderenId == ViewBag.girisYapmisUserId))
-             {
                 <tr>
                     @foreach (user us in db.users)
                     {
@@ -53,14 +28,12 @@ SELECT gonderilmeTarihi FROM db.mesajlar ORDER BY EventDate DESC
                             <td>@us.userAdi</td>
                         }
                     }
-                    <td>@mesaj.gonderenId</td>
-                    <td>@mesaj.gonderilenId</td>
                     <td>@mesaj.gonderilmeTarihi</td>
-                   
+
                     <td>@Html.ActionLink("Mesaji Gor", "Mesajlasma1", "Home", new { gonderenID = @mesaj.gonderenId }, null)</td>
                 </tr>
-                        }
-                    }
-                
+            }
+        }
+
     }
 </table>

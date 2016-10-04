@@ -73,12 +73,19 @@
 
                         }
                         <td>@mesaj.mesajKonusu</td>
-                        <td>@mesaj.mesajIcerik</td>
+                        <td id="icerik">@mesaj.mesajIcerik</td>
 
                         @if (mesaj.gonderenId != 3)
                         {
                             <td>
                                 <button type="button" class="btn btn-info btn-default" data-toggle="modal" data-gonderen="@ViewBag.girisYapmisUserId" data-gonderilcekKisi="@mesaj.gonderenId" data-target="#myModal">Cevapla</button>
+                            </td>
+                        }
+                        else if (mesaj.gonderenId == 3)
+                        {
+                            <td>
+                                <button type="button" class="btn btn-info btn-default" data-onclick="onaylama()">Onayla</button>
+                                <button type="button" class="btn btn-danger" data-icerik="@mesaj.mesajIcerik" onclick="reddet()">Reddet</button>
                             </td>
                         }
                     </tr>
@@ -91,9 +98,27 @@
         <script>
             $(document).ready(function () {
                 $(".btn").click(function () {
+                    $("#icerik").html($(this).attr("data-icerik"));
                     $("#myModal").modal("toggle");
                 });
             });
+
+
+            function onaylama() {
+                //  $.post("../Home/Onay", {}, function (data) {
+                alert("Onaylandi");
+                //});
+            }
+            function reddet() {
+                // kaynak = "hello sunny warm perfect day";
+                var kaynak = $("#icerik").text();
+                //var a =
+                var sol = "kullanici";
+                var sag = "idye";
+                $.post("../Home/Reddetme", {source : kaynak, leftWord: sol, rightWord: sag }, function (data) {
+                    alert(data);
+                });
+            }
         </script>
     </body>
 </html>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -431,6 +432,30 @@ namespace paylasimProject.Controllers
             var userlar = db.users;
 
             return View();
+        }
+
+        [HttpPost]
+        //public JsonResult Reddetme()
+        //{
+        //    projectPaylasimEntities6 db = new projectPaylasimEntities6();
+        //    var urun1 = db.uruns.Single(x => x.urunId == urunId);
+        //    urun1.urunDurumu = "2";
+        //    db.SaveChanges();
+        //    return Json("gamze");
+        //}
+        public JsonResult  Reddetme(String source, String leftWord, String rightWord)
+        {
+            string urunId = Regex.Match(source, String.Format(@"{0}\s(?<words>[\w\s]+)\s{1}", leftWord, rightWord),
+                            RegexOptions.IgnoreCase).Groups["words"].Value;
+            urunId.Trim();
+            int id = Int32.Parse(urunId);
+
+            projectPaylasimEntities6 db = new projectPaylasimEntities6();
+            var urun1 = db.uruns.Single(x => x.urunId == id);
+            urun1.urunDurumu = "1";
+            db.SaveChanges();
+
+            return Json("Reddedildi");
         }
     }
 }
