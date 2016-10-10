@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Mesajlasma1";
+    ViewBag.Title = "Mesaj Detaylari";
 }
 <!DOCTYPE html>
 <html>
@@ -13,7 +13,6 @@
 </head>
 
 <body>
-    <h2>@ViewBag.Message</h2>
     <h4>@ViewBag.deneme</h4>
     @{ var gonderen = @Request["gonderenID"];
     }
@@ -105,14 +104,10 @@
 
 
             function onaylama() {
-                //  $.post("../Home/Onay", {}, function (data) {
                 alert("Onaylandi");
-                //});
             }
             function reddet() {
-                // kaynak = "hello sunny warm perfect day";
                 var kaynak = $("#icerik").text();
-                //var a =
                 var sol = "kullanici";
                 var sag = "idye";
                 $.post("../Home/Reddetme", {source : kaynak, leftWord: sol, rightWord: sag }, function (data) {

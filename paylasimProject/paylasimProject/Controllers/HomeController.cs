@@ -74,7 +74,6 @@ namespace paylasimProject.Controllers
 
         public ActionResult Mesajlasma1(int gonderenID)
         {
-            ViewBag.Message = "Mesaj Sayfasina Hosgeldiniz";
             projectPaylasimEntities6 db = new projectPaylasimEntities6();
             int girisYapmisUserId = 0;
             string mesajListesi = string.Empty;
@@ -435,14 +434,6 @@ namespace paylasimProject.Controllers
         }
 
         [HttpPost]
-        //public JsonResult Reddetme()
-        //{
-        //    projectPaylasimEntities6 db = new projectPaylasimEntities6();
-        //    var urun1 = db.uruns.Single(x => x.urunId == urunId);
-        //    urun1.urunDurumu = "2";
-        //    db.SaveChanges();
-        //    return Json("gamze");
-        //}
         public JsonResult  Reddetme(String source, String leftWord, String rightWord)
         {
             string urunId = Regex.Match(source, String.Format(@"{0}\s(?<words>[\w\s]+)\s{1}", leftWord, rightWord),
@@ -456,6 +447,63 @@ namespace paylasimProject.Controllers
             db.SaveChanges();
 
             return Json("Reddedildi");
+        }
+
+        public ActionResult GelenKutusu()
+        {
+            projectPaylasimEntities6 db = new projectPaylasimEntities6();
+            int girisYapmisUserId = 0;
+            DateTime mesajinGonderilmeTarihi = DateTime.Now;
+            string girisYapmisUserAdi = string.Empty;
+            if (Session["gonulluAdi"] != null)
+            {
+                girisYapmisUserAdi = (string)Session["gonulluAdi"];
+            }
+
+            if (Session["yardimAlanAdi"] != null)
+            {
+                girisYapmisUserAdi = (string)Session["yardimAlanAdi"];
+            }
+
+            foreach (user u in db.users)
+            {
+                if (u.userKullaniciAdi == girisYapmisUserAdi)
+                {
+                    girisYapmisUserId = u.userId;
+                    ViewBag.girisYapmisUserId = girisYapmisUserId;
+
+                }
+            }
+
+            return View();
+        }
+        public ActionResult GonderilenKutusu()
+        {
+            projectPaylasimEntities6 db = new projectPaylasimEntities6();
+            int girisYapmisUserId = 0;
+            DateTime mesajinGonderilmeTarihi = DateTime.Now;
+            string girisYapmisUserAdi = string.Empty;
+            if (Session["gonulluAdi"] != null)
+            {
+                girisYapmisUserAdi = (string)Session["gonulluAdi"];
+            }
+
+            if (Session["yardimAlanAdi"] != null)
+            {
+                girisYapmisUserAdi = (string)Session["yardimAlanAdi"];
+            }
+
+            foreach (user u in db.users)
+            {
+                if (u.userKullaniciAdi == girisYapmisUserAdi)
+                {
+                    girisYapmisUserId = u.userId;
+                    ViewBag.girisYapmisUserId = girisYapmisUserId;
+
+                }
+            }
+
+            return View();
         }
     }
 }

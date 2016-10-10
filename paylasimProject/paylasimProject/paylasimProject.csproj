@@ -340,6 +340,8 @@
     <Content Include="Views\Home\Mesajlasma1.cshtml" />
     <Content Include="Views\Home\MesajlariGoruntuleme.cshtml" />
     <Content Include="Views\UrunEkleme\urunGoruntuleForYardimAlan.cshtml" />
+    <Content Include="Views\Home\GelenKutusu.cshtml" />
+    <Content Include="Views\Home\GonderilenKutusu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
